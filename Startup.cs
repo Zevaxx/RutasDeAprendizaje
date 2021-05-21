@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RutasDeAprendizaje.Models.DBModels;
 
 namespace RutasDeAprendizaje
 {
@@ -23,6 +25,22 @@ namespace RutasDeAprendizaje
 
             services.AddControllersWithViews();
 
+            // Replace with your connection string.
+            var connectionString = "server=localhost;user=root;password=;database=rutasdeaprendizaje";
+
+            // Replace with your server version and type.
+            // Use 'MariaDbServerVersion' for MariaDB.
+            // Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
+            // For common usages, see pull request #1233.
+            var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(connectionString));
+
+            // Replace 'YourDbContext' with the name of your own DbContext derived class.
+            services.AddDbContext<rutasdeaprendizajeContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(connectionString, serverVersion)
+                    .EnableSensitiveDataLogging() // <-- These two calls are optional but help
+                    .EnableDetailedErrors()       // <-- with debugging (remove for production).
+            );
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
