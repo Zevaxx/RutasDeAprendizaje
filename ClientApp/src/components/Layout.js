@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { NavMenu } from './NavMenu';
+import React, { useContext } from "react";
+import { Container } from "reactstrap";
+import { FormattedMessage } from "react-intl";
+import { Context } from "../components/LangWrapper";
 
-export class Layout extends Component {
-  static displayName = Layout.name;
+const Layout = (props) => {
+  const context = useContext(Context);
 
-  render () {
-    return (
-      <div>
-        <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <FormattedMessage
+        id="app.layout.title"
+        defaultMessage="No cargó desde archivo"
+      />
+      <select value={context.currentLocale} onChange={context.selectLang}>
+        <option value="en-US">English</option>
+        <option value="es">Español</option>
+      </select>
+      <Container>{props.children}</Container>
+    </div>
+  );
+};
+
+export default Layout;
