@@ -19,9 +19,11 @@ namespace RutasDeAprendizaje.Models.DBModels
         }
 
         public int Userid { get; set; }
+        public string Useremail { get; set; }
         public string Username { get; set; }
         public string Userpassword { get; set; }
         public string Userloginstatus { get; set; }
+        public string Usertoken { get; set; }
         public string Usercomunitypenalties { get; set; }
 
         public virtual ICollection<Tcommunity> Tcommunities { get; set; }

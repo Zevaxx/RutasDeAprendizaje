@@ -17,6 +17,7 @@ namespace RutasDeAprendizaje.Models.DBModels
         {
         }
 
+        public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
         public virtual DbSet<Tcommunity> Tcommunities { get; set; }
         public virtual DbSet<Tcourse> Tcourses { get; set; }
         public virtual DbSet<Tdiscipline> Tdisciplines { get; set; }
@@ -46,7 +47,21 @@ namespace RutasDeAprendizaje.Models.DBModels
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasCharSet("utf8mb4")
-                .UseCollation("utf8mb4_unicode_ci");
+                .UseCollation("utf8mb4_general_ci");
+
+            modelBuilder.Entity<Efmigrationshistory>(entity =>
+            {
+                entity.HasKey(e => e.MigrationId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("__efmigrationshistory");
+
+                entity.Property(e => e.MigrationId).HasMaxLength(150);
+
+                entity.Property(e => e.ProductVersion)
+                    .IsRequired()
+                    .HasMaxLength(32);
+            });
 
             modelBuilder.Entity<Tcommunity>(entity =>
             {
@@ -54,6 +69,8 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasName("PRIMARY");
 
                 entity.ToTable("tcommunities");
+
+                entity.UseCollation("utf8mb4_unicode_ci");
 
                 entity.HasIndex(e => e.Userid, "FK_TRCOMUNITYHASUSERCREATOR");
 
@@ -106,6 +123,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("tcourses");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.HasIndex(e => e.Comid, "FK_TRCOURSEHASCOMMUNITY2");
 
                 entity.Property(e => e.Courseid)
@@ -143,6 +162,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("tdisciplines");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.Property(e => e.Disciplineid)
                     .HasColumnType("int(11)")
                     .HasColumnName("DISCIPLINEID");
@@ -159,6 +180,8 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasName("PRIMARY");
 
                 entity.ToTable("tlearningroutes");
+
+                entity.UseCollation("utf8mb4_unicode_ci");
 
                 entity.HasIndex(e => e.Userid, "FK_TRLEARNINGROUTECREATEDBYUSER");
 
@@ -217,6 +240,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("tpenalties");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.Property(e => e.Penalid)
                     .HasColumnType("int(11)")
                     .HasColumnName("PENALID");
@@ -238,6 +263,8 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasName("PRIMARY");
 
                 entity.ToTable("tposts");
+
+                entity.UseCollation("utf8mb4_unicode_ci");
 
                 entity.HasIndex(e => e.Comid, "FK_TRCOMMUNITYHASPOST");
 
@@ -285,6 +312,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("trcoursehastest");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.HasIndex(e => e.Courseid, "FK_TRCOURSEHASTEST2");
 
                 entity.Property(e => e.Testid)
@@ -315,6 +344,8 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("trcoursesinroute");
+
+                entity.UseCollation("utf8mb4_unicode_ci");
 
                 entity.HasIndex(e => e.Routeid, "FK_TRCOURSESINROUTE2");
 
@@ -347,6 +378,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("trlearningrouteshassuscribers");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.HasIndex(e => e.Userid, "FK_TRLEARNINGROUTESHASSUSCRIBERS2");
 
                 entity.Property(e => e.Routeid)
@@ -377,6 +410,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("troles");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.Property(e => e.Rolid)
                     .HasColumnType("int(11)")
                     .HasColumnName("ROLID");
@@ -398,6 +433,8 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("trrouteshasdiscipline");
+
+                entity.UseCollation("utf8mb4_unicode_ci");
 
                 entity.HasIndex(e => e.Disciplineid, "FK_TRROUTESHASDISCIPLINE2");
 
@@ -430,6 +467,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("truserhaspenalty");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.HasIndex(e => e.Userid, "FK_TRUSERHASPENALTY2");
 
                 entity.Property(e => e.Penalid)
@@ -460,6 +499,8 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("truserhaverol");
+
+                entity.UseCollation("utf8mb4_unicode_ci");
 
                 entity.HasIndex(e => e.Userid, "FK_TRUSERHAVEROL2");
 
@@ -492,6 +533,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("trusershasdiscipline");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.HasIndex(e => e.Disciplineid, "FK_TRUSERSHASDISCIPLINE2");
 
                 entity.Property(e => e.Userid)
@@ -522,6 +565,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("ttests");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.Property(e => e.Testid)
                     .HasColumnType("int(11)")
                     .HasColumnName("TESTID");
@@ -547,6 +592,8 @@ namespace RutasDeAprendizaje.Models.DBModels
 
                 entity.ToTable("tusers");
 
+                entity.UseCollation("utf8mb4_unicode_ci");
+
                 entity.Property(e => e.Userid)
                     .HasColumnType("int(11)")
                     .HasColumnName("USERID");
@@ -554,6 +601,11 @@ namespace RutasDeAprendizaje.Models.DBModels
                 entity.Property(e => e.Usercomunitypenalties)
                     .HasMaxLength(255)
                     .HasColumnName("USERCOMUNITYPENALTIES");
+
+                entity.Property(e => e.Useremail)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("USEREMAIL");
 
                 entity.Property(e => e.Userloginstatus)
                     .IsRequired()
@@ -569,6 +621,11 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("USERPASSWORD");
+
+                entity.Property(e => e.Usertoken)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("USERTOKEN");
             });
 
             OnModelCreatingPartial(modelBuilder);
