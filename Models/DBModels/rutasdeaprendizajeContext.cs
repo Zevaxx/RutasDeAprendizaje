@@ -17,7 +17,7 @@ namespace RutasDeAprendizaje.Models.DBModels
         {
         }
 
-        public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
+        
         public virtual DbSet<Tcommunity> Tcommunities { get; set; }
         public virtual DbSet<Tcourse> Tcourses { get; set; }
         public virtual DbSet<Tdiscipline> Tdisciplines { get; set; }
@@ -49,19 +49,7 @@ namespace RutasDeAprendizaje.Models.DBModels
             modelBuilder.HasCharSet("utf8mb4")
                 .UseCollation("utf8mb4_general_ci");
 
-            modelBuilder.Entity<Efmigrationshistory>(entity =>
-            {
-                entity.HasKey(e => e.MigrationId)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("__efmigrationshistory");
-
-                entity.Property(e => e.MigrationId).HasMaxLength(150);
-
-                entity.Property(e => e.ProductVersion)
-                    .IsRequired()
-                    .HasMaxLength(32);
-            });
+           
 
             modelBuilder.Entity<Tcommunity>(entity =>
             {
@@ -602,11 +590,6 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .HasMaxLength(255)
                     .HasColumnName("USERCOMUNITYPENALTIES");
 
-                entity.Property(e => e.Useremail)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("USEREMAIL");
-
                 entity.Property(e => e.Userloginstatus)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -621,11 +604,6 @@ namespace RutasDeAprendizaje.Models.DBModels
                     .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("USERPASSWORD");
-
-                entity.Property(e => e.Usertoken)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("USERTOKEN");
             });
 
             OnModelCreatingPartial(modelBuilder);
