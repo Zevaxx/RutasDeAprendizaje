@@ -9,17 +9,252 @@ using RutasDeAprendizaje.Models.DBModels;
 namespace RutasDeAprendizaje.Migrations
 {
     [DbContext(typeof(rutasdeaprendizajeContext))]
-    [Migration("20210604020200_1Migration")]
-    partial class _1Migration
+    [Migration("20210604194249_2Migration")]
+    partial class _2Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasCharSet("utf8mb4")
-                .UseCollation("utf8mb4_general_ci")
+                .UseCollation("utf8mb4_unicode_ci")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.6");
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
+                {
+                    b.Property<string>("UserCode")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(50000)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("DeviceCode")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("Expiration")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SubjectId")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("UserCode");
+
+                    b.HasIndex("DeviceCode")
+                        .IsUnique();
+
+                    b.HasIndex("Expiration");
+
+                    b.ToTable("DeviceCodes");
+                });
+
+            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.PersistedGrant", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("ConsumedTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasMaxLength(50000)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SubjectId")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("Expiration");
+
+                    b.HasIndex("SubjectId", "ClientId", "Type");
+
+                    b.HasIndex("SubjectId", "SessionId", "Type");
+
+                    b.ToTable("PersistedGrants");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Tcommunity", b =>
                 {
@@ -38,18 +273,18 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("COURSEID");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserID");
+
                     b.Property<int?>("Routeid")
                         .HasColumnType("int(11)")
                         .HasColumnName("ROUTEID");
 
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
-
                     b.HasKey("Comid")
                         .HasName("PRIMARY");
 
-                    b.HasIndex(new[] { "Userid" }, "FK_TRCOMUNITYHASUSERCREATOR");
+                    b.HasIndex(new[] { "Id" }, "FK_TRCOMUNITYHASUSERCREATOR");
 
                     b.HasIndex(new[] { "Courseid" }, "FK_TRCOURSEHASCOMMUNITY");
 
@@ -130,6 +365,10 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("COMID");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
+
                     b.Property<int>("Routedificultlevel")
                         .HasColumnType("int(11)")
                         .HasColumnName("ROUTEDIFICULTLEVEL");
@@ -153,14 +392,10 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("ROUTESCORE");
 
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
-
                     b.HasKey("Routeid")
                         .HasName("PRIMARY");
 
-                    b.HasIndex(new[] { "Userid" }, "FK_TRLEARNINGROUTECREATEDBYUSER");
+                    b.HasIndex(new[] { "Id" }, "FK_TRLEARNINGROUTECREATEDBYUSER");
 
                     b.HasIndex(new[] { "Comid" }, "FK_TRLEARNINGROUTESHASCOMUNITY2");
 
@@ -209,6 +444,10 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("COMID");
 
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
+
                     b.Property<string>("Postcontent")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -219,16 +458,12 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("POSTDATE");
 
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
-
                     b.HasKey("Postid")
                         .HasName("PRIMARY");
 
                     b.HasIndex(new[] { "Comid" }, "FK_TRCOMMUNITYHASPOST");
 
-                    b.HasIndex(new[] { "Userid" }, "FK_TRUSERHASPOST");
+                    b.HasIndex(new[] { "Id" }, "FK_TRUSERHASPOST");
 
                     b.ToTable("tposts");
 
@@ -286,15 +521,15 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("ROUTEID");
 
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
 
-                    b.HasKey("Routeid", "Userid")
+                    b.HasKey("Routeid", "Id")
                         .HasName("PRIMARY")
                         .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-                    b.HasIndex(new[] { "Userid" }, "FK_TRLEARNINGROUTESHASSUSCRIBERS2");
+                    b.HasIndex(new[] { "Id" }, "FK_TRLEARNINGROUTESHASSUSCRIBERS2");
 
                     b.ToTable("trlearningrouteshassuscribers");
 
@@ -357,15 +592,15 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("PENALID");
 
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
 
-                    b.HasKey("Penalid", "Userid")
+                    b.HasKey("Penalid", "Id")
                         .HasName("PRIMARY")
                         .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-                    b.HasIndex(new[] { "Userid" }, "FK_TRUSERHASPENALTY2");
+                    b.HasIndex(new[] { "Id" }, "FK_TRUSERHASPENALTY2");
 
                     b.ToTable("truserhaspenalty");
 
@@ -379,15 +614,15 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("ROLID");
 
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
 
-                    b.HasKey("Rolid", "Userid")
+                    b.HasKey("Rolid", "Id")
                         .HasName("PRIMARY")
                         .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-                    b.HasIndex(new[] { "Userid" }, "FK_TRUSERHAVEROL2");
+                    b.HasIndex(new[] { "Id" }, "FK_TRUSERHAVEROL2");
 
                     b.ToTable("truserhaverol");
 
@@ -397,15 +632,15 @@ namespace RutasDeAprendizaje.Migrations
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Trusershasdiscipline", b =>
                 {
-                    b.Property<int>("Userid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
 
                     b.Property<int>("Disciplineid")
                         .HasColumnType("int(11)")
                         .HasColumnName("DISCIPLINEID");
 
-                    b.HasKey("Userid", "Disciplineid")
+                    b.HasKey("Id", "Disciplineid")
                         .HasName("PRIMARY")
                         .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
@@ -450,10 +685,56 @@ namespace RutasDeAprendizaje.Migrations
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Tuser", b =>
                 {
-                    b.Property<int>("Userid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)")
-                        .HasColumnName("USERID");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("UserId");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Usercomunitypenalties")
                         .HasMaxLength(255)
@@ -461,30 +742,75 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnName("USERCOMUNITYPENALTIES");
 
                     b.Property<string>("Userloginstatus")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("USERLOGINSTATUS");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("USERNAME");
-
-                    b.Property<string>("Userpassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("USERPASSWORD");
-
-                    b.HasKey("Userid")
+                    b.HasKey("Id")
                         .HasName("PRIMARY");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("tusers");
 
                     b
                         .UseCollation("utf8mb4_unicode_ci");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Tcommunity", b =>
@@ -494,16 +820,15 @@ namespace RutasDeAprendizaje.Migrations
                         .HasForeignKey("Courseid")
                         .HasConstraintName("FK_TRCOURSEHASCOMMUNITY");
 
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
+                        .WithMany("Tcommunities")
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_TRCOMUNITYHASUSERCREATOR");
+
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tlearningroute", "Route")
                         .WithMany("Tcommunities")
                         .HasForeignKey("Routeid")
                         .HasConstraintName("FK_TRLEARNINGROUTESHASCOMUNITY");
-
-                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
-                        .WithMany("Tcommunities")
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("FK_TRCOMUNITYHASUSERCREATOR")
-                        .IsRequired();
 
                     b.Navigation("Course");
 
@@ -533,9 +858,8 @@ namespace RutasDeAprendizaje.Migrations
 
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
                         .WithMany("Tlearningroutes")
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("FK_TRLEARNINGROUTECREATEDBYUSER")
-                        .IsRequired();
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_TRLEARNINGROUTECREATEDBYUSER");
 
                     b.Navigation("Com");
 
@@ -552,9 +876,8 @@ namespace RutasDeAprendizaje.Migrations
 
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
                         .WithMany("Tposts")
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("FK_TRUSERHASPOST")
-                        .IsRequired();
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_TRUSERHASPOST");
 
                     b.Navigation("Com");
 
@@ -601,16 +924,16 @@ namespace RutasDeAprendizaje.Migrations
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Trlearningrouteshassuscriber", b =>
                 {
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
+                        .WithMany("Trlearningrouteshassuscribers")
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_TRLEARNINGROUTESHASSUSCRIBERS2")
+                        .IsRequired();
+
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tlearningroute", "Route")
                         .WithMany("Trlearningrouteshassuscribers")
                         .HasForeignKey("Routeid")
                         .HasConstraintName("FK_TRLEARNINGROUTESHASSUSCRIBERS")
-                        .IsRequired();
-
-                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
-                        .WithMany("Trlearningrouteshassuscribers")
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("FK_TRLEARNINGROUTESHASSUSCRIBERS2")
                         .IsRequired();
 
                     b.Navigation("Route");
@@ -639,16 +962,16 @@ namespace RutasDeAprendizaje.Migrations
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Truserhaspenalty", b =>
                 {
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
+                        .WithMany("Truserhaspenalties")
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_TRUSERHASPENALTY2")
+                        .IsRequired();
+
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tpenalty", "Penal")
                         .WithMany("Truserhaspenalties")
                         .HasForeignKey("Penalid")
                         .HasConstraintName("FK_TRUSERHASPENALTY")
-                        .IsRequired();
-
-                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
-                        .WithMany("Truserhaspenalties")
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("FK_TRUSERHASPENALTY2")
                         .IsRequired();
 
                     b.Navigation("Penal");
@@ -658,16 +981,16 @@ namespace RutasDeAprendizaje.Migrations
 
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Truserhaverol", b =>
                 {
+                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
+                        .WithMany("Truserhaverols")
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_TRUSERHAVEROL2")
+                        .IsRequired();
+
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Trole", "Rol")
                         .WithMany("Truserhaverols")
                         .HasForeignKey("Rolid")
                         .HasConstraintName("FK_TRUSERHAVEROL")
-                        .IsRequired();
-
-                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
-                        .WithMany("Truserhaverols")
-                        .HasForeignKey("Userid")
-                        .HasConstraintName("FK_TRUSERHAVEROL2")
                         .IsRequired();
 
                     b.Navigation("Rol");
@@ -685,7 +1008,7 @@ namespace RutasDeAprendizaje.Migrations
 
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
                         .WithMany("Trusershasdisciplines")
-                        .HasForeignKey("Userid")
+                        .HasForeignKey("Id")
                         .HasConstraintName("FK_TRUSERSHASDISCIPLINE")
                         .IsRequired();
 

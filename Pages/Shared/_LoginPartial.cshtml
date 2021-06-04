@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using RutasDeAprendizaje.Models;
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@using RutasDeAprendizaje.Models.DBModels;
+
+@inject SignInManager<Tuser> SignInManager
+@inject UserManager<Tuser> UserManager
 
 @{
     string returnUrl = null;

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
-using RutasDeAprendizaje.Data;
+//using RutasDeAprendizaje.Data;
 using RutasDeAprendizaje.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,20 +45,14 @@ namespace RutasDeAprendizaje
              .EnableDetailedErrors()       // <-- with debugging (remove for production).
         );
 
-      services.AddDbContext<ApplicationDbContext>(
-          dbContextOptions => dbContextOptions
-            .UseMySql(connectionString, serverVersion)
-            .EnableSensitiveDataLogging() // <-- These two calls are optional but help
-             .EnableDetailedErrors()       // <-- with debugging (remove for production).
-        );
-
+  
       services.AddDatabaseDeveloperPageExceptionFilter();
 
-      services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-          .AddEntityFrameworkStores<ApplicationDbContext>();
+      services.AddDefaultIdentity<Tuser>(options => options.SignIn.RequireConfirmedAccount = true)
+          .AddEntityFrameworkStores<rutasdeaprendizajeContext>();
 
       services.AddIdentityServer()
-          .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+          .AddApiAuthorization<Tuser, rutasdeaprendizajeContext>();
 
       services.AddAuthentication()
           .AddIdentityServerJwt();

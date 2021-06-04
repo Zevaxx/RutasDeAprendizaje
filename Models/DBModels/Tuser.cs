@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+
 
 #nullable disable
 
 namespace RutasDeAprendizaje.Models.DBModels
 {
-    public partial class Tuser
+    public partial class Tuser : IdentityUser
     {
         public Tuser()
         {
@@ -18,9 +20,9 @@ namespace RutasDeAprendizaje.Models.DBModels
             Trusershasdisciplines = new HashSet<Trusershasdiscipline>();
         }
 
-        public int Userid { get; set; }
-        public string Username { get; set; }
-        public string Userpassword { get; set; }
+        //public int Userid { get; set; }
+        //public string Username { get; set; }
+        //public string Userpassword { get; set; }
         public string Userloginstatus { get; set; }
         public string Usercomunitypenalties { get; set; }
 
