@@ -8,7 +8,7 @@ using RutasDeAprendizaje.Models.DBModels;
 
 namespace RutasDeAprendizaje.Migrations
 {
-    [DbContext(typeof(rutasdeaprendizajeContext))]
+    [DbContext(typeof(RutasdeaprendizajeContext))]
     [Migration("20210604193350_1Migration")]
     partial class _1Migration
     {

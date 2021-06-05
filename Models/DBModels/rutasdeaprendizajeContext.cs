@@ -9,9 +9,9 @@ using Microsoft.Extensions.Options;
 
 namespace RutasDeAprendizaje.Models.DBModels
 {
-  public partial class rutasdeaprendizajeContext : ApiAuthorizationDbContext<Tuser>
+  public partial class RutasdeaprendizajeContext : ApiAuthorizationDbContext<Tuser>
   {
-    public rutasdeaprendizajeContext(
+    public RutasdeaprendizajeContext(
       DbContextOptions options,
       IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
     {
@@ -42,11 +42,7 @@ namespace RutasDeAprendizaje.Models.DBModels
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      if (!optionsBuilder.IsConfigured)
-      {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        optionsBuilder.UseMySql("server=localhost;database=rutasdeaprendizaje;user=root;treattinyasboolean=true", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.24-mysql"));
-      }
+ 
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

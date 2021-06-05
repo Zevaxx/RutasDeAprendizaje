@@ -7,7 +7,7 @@ using RutasDeAprendizaje.Models.DBModels;
 
 namespace RutasDeAprendizaje.Migrations
 {
-    [DbContext(typeof(rutasdeaprendizajeContext))]
+    [DbContext(typeof(RutasdeaprendizajeContext))]
     partial class rutasdeaprendizajeContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
