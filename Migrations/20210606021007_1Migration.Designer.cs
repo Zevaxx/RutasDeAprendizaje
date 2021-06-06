@@ -9,7 +9,7 @@ using RutasDeAprendizaje.Models.DBModels;
 namespace RutasDeAprendizaje.Migrations
 {
     [DbContext(typeof(RutasdeaprendizajeContext))]
-    [Migration("20210604193350_1Migration")]
+    [Migration("20210606021007_1Migration")]
     partial class _1Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,6 +307,11 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("COMID");
 
+                    b.Property<string>("Coursedescription")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("COURSEDESCRIPTION");
+
                     b.Property<string>("Coursename")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -368,6 +373,11 @@ namespace RutasDeAprendizaje.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
                         .HasColumnName("UserId");
+
+                    b.Property<string>("Routedescription")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("ROUTEDESCRIPTION");
 
                     b.Property<int>("Routedificultlevel")
                         .HasColumnType("int(11)")
@@ -742,7 +752,6 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnName("USERCOMUNITYPENALTIES");
 
                     b.Property<string>("Userloginstatus")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("USERLOGINSTATUS");

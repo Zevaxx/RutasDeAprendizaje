@@ -165,7 +165,7 @@ namespace RutasDeAprendizaje.Migrations
                 {
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false, collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    USERLOGINSTATUS = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_unicode_ci")
+                    USERLOGINSTATUS = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     USERCOMUNITYPENALTIES = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -424,6 +424,8 @@ namespace RutasDeAprendizaje.Migrations
                     COMID = table.Column<int>(type: "int(11)", nullable: false),
                     COURSENAME = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    COURSEDESCRIPTION = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_unicode_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     COURSETIMELENGTH = table.Column<int>(type: "int(11)", nullable: false),
                     COURSESCORE = table.Column<int>(type: "int(11)", nullable: true)
                 },
@@ -471,6 +473,8 @@ namespace RutasDeAprendizaje.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     COMID = table.Column<int>(type: "int(11)", nullable: false),
                     ROUTENAME = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_unicode_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ROUTEDESCRIPTION = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_unicode_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ROUTEDIFICULTLEVEL = table.Column<int>(type: "int(11)", nullable: false),
                     ROUTEDISCIPLINE = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_unicode_ci")

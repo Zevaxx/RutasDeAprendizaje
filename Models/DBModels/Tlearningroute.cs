@@ -19,6 +19,7 @@ namespace RutasDeAprendizaje.Models.DBModels
     public string Id { get; set; }
     public int Comid { get; set; }
     public string Routename { get; set; }
+    public string Routedescription { get; set; }
     public int Routedificultlevel { get; set; }
     public string Routediscipline { get; set; }
     public int? Routescore { get; set; }

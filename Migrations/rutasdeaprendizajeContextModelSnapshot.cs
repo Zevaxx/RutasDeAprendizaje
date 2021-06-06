@@ -8,7 +8,7 @@ using RutasDeAprendizaje.Models.DBModels;
 namespace RutasDeAprendizaje.Migrations
 {
     [DbContext(typeof(RutasdeaprendizajeContext))]
-    partial class rutasdeaprendizajeContextModelSnapshot : ModelSnapshot
+    partial class RutasdeaprendizajeContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -305,6 +305,11 @@ namespace RutasDeAprendizaje.Migrations
                         .HasColumnType("int(11)")
                         .HasColumnName("COMID");
 
+                    b.Property<string>("Coursedescription")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("COURSEDESCRIPTION");
+
                     b.Property<string>("Coursename")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -366,6 +371,11 @@ namespace RutasDeAprendizaje.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("varchar(255)")
                         .HasColumnName("UserId");
+
+                    b.Property<string>("Routedescription")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("ROUTEDESCRIPTION");
 
                     b.Property<int>("Routedificultlevel")
                         .HasColumnType("int(11)")

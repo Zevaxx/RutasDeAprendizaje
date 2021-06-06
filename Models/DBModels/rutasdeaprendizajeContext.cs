@@ -132,7 +132,11 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasMaxLength(255)
                   .HasColumnName("COURSENAME");
 
-        entity.Property(e => e.Coursescore)
+        entity.Property(e => e.Coursedescription)
+                  .IsRequired()
+                  .HasColumnName("COURSEDESCRIPTION");
+
+          entity.Property(e => e.Coursescore)
                   .HasColumnType("int(11)")
                   .HasColumnName("COURSESCORE");
 
@@ -204,7 +208,11 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasMaxLength(255)
                   .HasColumnName("ROUTENAME");
 
-        entity.Property(e => e.Routescore)
+        entity.Property(e => e.Routedescription)
+                .IsRequired()
+                .HasColumnName("ROUTEDESCRIPTION");
+
+          entity.Property(e => e.Routescore)
                   .HasColumnType("int(11)")
                   .HasColumnName("ROUTESCORE");
 

@@ -17,6 +17,7 @@ namespace RutasDeAprendizaje.Models.DBModels
         public int Courseid { get; set; }
         public int Comid { get; set; }
         public string Coursename { get; set; }
+        public string Coursedescription { get; set; }
         public int Coursetimelength { get; set; }
         public int? Coursescore { get; set; }
 
