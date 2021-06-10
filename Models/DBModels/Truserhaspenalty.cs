@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace RutasDeAprendizaje.Models.DBModels
 {
-    public partial class Truserhaspenalty
-    {
-        public int Penalid { get; set; }
-        public int Userid { get; set; }
+  public partial class Truserhaspenalty
+  {
+    public int Penalid { get; set; }
+    public string Id { get; set; }
 
-        public virtual Tpenalty Penal { get; set; }
-        public virtual Tuser User { get; set; }
-    }
+    public virtual Tpenalty Penal { get; set; }
+    public virtual Tuser User { get; set; }
+  }
 }

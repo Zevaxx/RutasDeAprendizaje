@@ -1,20 +1,29 @@
-import React from "react";
-import { Route, Switch } from "react-router";
-import Layout from "../components/Layout";
-import Login from "../pages/Login";
+import React, { Component } from "react";
+import { Route } from "react-router";
+import { Layout } from "../components/Layout";
+import { Home } from "../pages/Home";
+import { FetchData } from "../components/FetchData";
+import { Counter } from "../components/Counter";
+import AuthorizeRoute from "../components/api-authorization/AuthorizeRoute";
+import ApiAuthorizationRoutes from "../components/api-authorization/ApiAuthorizationRoutes";
+import { ApplicationPaths } from "../components/api-authorization/ApiAuthorizationConstants";
 
-// import {Menu}  from '../pages/Menu'
-// import { Home } from '../components/Home';
+import "../css/custom.css";
 
-const App = () => {
-  return (
-    <Layout>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        {/* <Route path='/counter' component={Menu} /> */}
-      </Switch>
-    </Layout>
-  );
-};
+export default class App extends Component {
+  static displayName = App.name;
 
-export default App;
+  render() {
+    return (
+      <Layout>
+        <Route exact path="/" component={Home} />
+        <Route path="/counter" component={Counter} />
+        <AuthorizeRoute path="/fetch-data" component={FetchData} />
+        <Route
+          path={ApplicationPaths.ApiAuthorizationPrefix}
+          component={ApiAuthorizationRoutes}
+        />
+      </Layout>
+    );
+  }
+}

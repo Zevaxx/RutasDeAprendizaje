@@ -1,24 +1,16 @@
-import React, { useContext } from "react";
+import React, { Component } from "react";
 import { Container } from "reactstrap";
-import { FormattedMessage } from "react-intl";
-import { Context } from "../components/LangWrapper";
+import NavMenu from "./NavMenu";
 
-const Layout = (props) => {
-  const context = useContext(Context);
+export class Layout extends Component {
+  static displayName = Layout.name;
 
-  return (
-    <div>
-      <FormattedMessage
-        id="app.layout.title"
-        defaultMessage="No cargó desde archivo"
-      />
-      <select value={context.currentLocale} onChange={context.selectLang}>
-        <option value="en-US">English</option>
-        <option value="es">Español</option>
-      </select>
-      <Container>{props.children}</Container>
-    </div>
-  );
-};
-
-export default Layout;
+  render() {
+    return (
+      <div>
+        <NavMenu />
+        <Container>{this.props.children}</Container>
+      </div>
+    );
+  }
+}
