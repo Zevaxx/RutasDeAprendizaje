@@ -9,7 +9,7 @@ using RutasDeAprendizaje.Models.DBModels;
 namespace RutasDeAprendizaje.Migrations
 {
     [DbContext(typeof(RutasdeaprendizajeContext))]
-    [Migration("20210606021007_1Migration")]
+    [Migration("20210610024918_1Migration")]
     partial class _1Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
