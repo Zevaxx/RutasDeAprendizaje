@@ -46,7 +46,17 @@ namespace RutasDeAprendizaje
         );
 
 
-      services.AddDatabaseDeveloperPageExceptionFilter();
+            services.Configure<IdentityOptions>(options =>
+           {
+               options.Password.RequiredLength = 5;
+               options.Password.RequireNonAlphanumeric = false;
+               options.Password.RequireLowercase = false;
+               options.Password.RequireUppercase = false;
+               options.Password.RequireDigit = false;
+           }
+            );
+      
+                services.AddDatabaseDeveloperPageExceptionFilter();
 
       services.AddDefaultIdentity<Tuser>(options => options.SignIn.RequireConfirmedAccount = true)
           //.AddDefaultUI()
