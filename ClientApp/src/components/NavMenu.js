@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import {
   Collapse,
@@ -17,6 +17,12 @@ import { Context } from "../components/LangWrapper";
 const NavMenu = (props) => {
   let context = useContext(Context);
 
+  const [collapsed, setCollapsed] = useState(true);
+
+  let toggleNavbar = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
     <header>
       <Navbar
@@ -27,17 +33,17 @@ const NavMenu = (props) => {
           <NavbarBrand tag={Link} to="/">
             <FormattedMessage
               id="app.layout.title"
-              defaultMessage="No cargó desde archivo"
+              defaultMessage="Rutas de aprendizaje"
             />
             <select value={context.currentLocale} onChange={context.selectLang}>
               <option value="en-US">English</option>
               <option value="es">Español</option>
             </select>
           </NavbarBrand>
-          <NavbarToggler className="mr-2" />
+          <NavbarToggler onClick={toggleNavbar} className="mr-2" />
           <Collapse
             className="d-sm-inline-flex flex-sm-row-reverse"
-            // isOpen={!this.state.collapsed}
+            isOpen={collapsed}
             navbar
           >
             <ul className="navbar-nav flex-grow">
@@ -46,16 +52,7 @@ const NavMenu = (props) => {
                   Home
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/counter">
-                  Counter
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">
-                  Fetch data
-                </NavLink>
-              </NavItem>
+
               <LoginMenu></LoginMenu>
             </ul>
           </Collapse>
