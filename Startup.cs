@@ -31,11 +31,11 @@ namespace RutasDeAprendizaje
       // Replace with your connection string.
       var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            // Replace with your server version and type.
-            // Use 'MariaDbServerVersion' for MariaDB.
-            // Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
-            // For common usages, see pull request #1233.
-            var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(connectionString));
+      // Replace with your server version and type.
+      // Use 'MariaDbServerVersion' for MariaDB.
+      // Alternatively, use 'ServerVersion.AutoDetect(connectionString)'.
+      // For common usages, see pull request #1233.
+      var serverVersion = new MySqlServerVersion(ServerVersion.AutoDetect(connectionString));
 
       // Replace 'YourDbContext' with the name of your own DbContext derived class.
       services.AddDbContext<RutasdeaprendizajeContext>(
@@ -45,10 +45,24 @@ namespace RutasDeAprendizaje
              .EnableDetailedErrors()       // <-- with debugging (remove for production).
         );
 
-  
-      services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.Configure<IdentityOptions>(options =>
+           {
+               options.Password.RequiredLength = 5;
+               options.Password.RequireNonAlphanumeric = false;
+               options.Password.RequireLowercase = false;
+               options.Password.RequireUppercase = false;
+               options.Password.RequireDigit = false;
+           }
+            );
+      
+                services.AddDatabaseDeveloperPageExceptionFilter();
 
       services.AddDefaultIdentity<Tuser>(options => options.SignIn.RequireConfirmedAccount = true)
+          //.AddDefaultUI()
+          .AddRoles<IdentityRole>()
+          .AddRoleManager<RoleManager<IdentityRole>>()
+          //.AddDefaultTokenProviders()
           .AddEntityFrameworkStores<RutasdeaprendizajeContext>();
 
       services.AddIdentityServer()
