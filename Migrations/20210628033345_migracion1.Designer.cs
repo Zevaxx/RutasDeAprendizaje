@@ -9,8 +9,8 @@ using RutasDeAprendizaje.Models.DBModels;
 namespace RutasDeAprendizaje.Migrations
 {
     [DbContext(typeof(RutasdeaprendizajeContext))]
-    [Migration("20210610024918_1Migration")]
-    partial class _1Migration
+    [Migration("20210628033345_migracion1")]
+    partial class migracion1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -547,33 +547,6 @@ namespace RutasDeAprendizaje.Migrations
                         .UseCollation("utf8mb4_unicode_ci");
                 });
 
-            modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Trole", b =>
-                {
-                    b.Property<int>("Rolid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int(11)")
-                        .HasColumnName("ROLID");
-
-                    b.Property<string>("Roldetail")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("ROLDETAIL");
-
-                    b.Property<string>("Rolname")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("ROLNAME");
-
-                    b.HasKey("Rolid")
-                        .HasName("PRIMARY");
-
-                    b.ToTable("troles");
-
-                    b
-                        .UseCollation("utf8mb4_unicode_ci");
-                });
-
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Trrouteshasdiscipline", b =>
                 {
                     b.Property<int>("Routeid")
@@ -613,28 +586,6 @@ namespace RutasDeAprendizaje.Migrations
                     b.HasIndex(new[] { "Id" }, "FK_TRUSERHASPENALTY2");
 
                     b.ToTable("truserhaspenalty");
-
-                    b
-                        .UseCollation("utf8mb4_unicode_ci");
-                });
-
-            modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Truserhaverol", b =>
-                {
-                    b.Property<int>("Rolid")
-                        .HasColumnType("int(11)")
-                        .HasColumnName("ROLID");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("UserId");
-
-                    b.HasKey("Rolid", "Id")
-                        .HasName("PRIMARY")
-                        .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-
-                    b.HasIndex(new[] { "Id" }, "FK_TRUSERHAVEROL2");
-
-                    b.ToTable("truserhaverol");
 
                     b
                         .UseCollation("utf8mb4_unicode_ci");
@@ -989,25 +940,6 @@ namespace RutasDeAprendizaje.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Truserhaverol", b =>
-                {
-                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Tuser", "User")
-                        .WithMany("Truserhaverols")
-                        .HasForeignKey("Id")
-                        .HasConstraintName("FK_TRUSERHAVEROL2")
-                        .IsRequired();
-
-                    b.HasOne("RutasDeAprendizaje.Models.DBModels.Trole", "Rol")
-                        .WithMany("Truserhaverols")
-                        .HasForeignKey("Rolid")
-                        .HasConstraintName("FK_TRUSERHAVEROL")
-                        .IsRequired();
-
-                    b.Navigation("Rol");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Trusershasdiscipline", b =>
                 {
                     b.HasOne("RutasDeAprendizaje.Models.DBModels.Tdiscipline", "Discipline")
@@ -1068,11 +1000,6 @@ namespace RutasDeAprendizaje.Migrations
                     b.Navigation("Truserhaspenalties");
                 });
 
-            modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Trole", b =>
-                {
-                    b.Navigation("Truserhaverols");
-                });
-
             modelBuilder.Entity("RutasDeAprendizaje.Models.DBModels.Ttest", b =>
                 {
                     b.Navigation("Trcoursehastests");
@@ -1089,8 +1016,6 @@ namespace RutasDeAprendizaje.Migrations
                     b.Navigation("Trlearningrouteshassuscribers");
 
                     b.Navigation("Truserhaspenalties");
-
-                    b.Navigation("Truserhaverols");
 
                     b.Navigation("Trusershasdisciplines");
                 });

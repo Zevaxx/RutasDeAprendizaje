@@ -32,10 +32,10 @@ namespace RutasDeAprendizaje.Models.DBModels
     public virtual DbSet<Trcoursehastest> Trcoursehastests { get; set; }
     public virtual DbSet<Trcoursesinroute> Trcoursesinroutes { get; set; }
     public virtual DbSet<Trlearningrouteshassuscriber> Trlearningrouteshassuscribers { get; set; }
-    public virtual DbSet<Trole> Troles { get; set; }
+   
     public virtual DbSet<Trrouteshasdiscipline> Trrouteshasdisciplines { get; set; }
     public virtual DbSet<Truserhaspenalty> Truserhaspenalties { get; set; }
-    public virtual DbSet<Truserhaverol> Truserhaverols { get; set; }
+    
     public virtual DbSet<Trusershasdiscipline> Trusershasdisciplines { get; set; }
     public virtual DbSet<Ttest> Ttests { get; set; }
     public virtual DbSet<Tuser> Tusers { get; set; }
@@ -403,29 +403,6 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasConstraintName("FK_TRLEARNINGROUTESHASSUSCRIBERS2");
       });
 
-      modelBuilder.Entity<Trole>(entity =>
-      {
-        entity.HasKey(e => e.Rolid)
-                  .HasName("PRIMARY");
-
-        entity.ToTable("troles");
-
-        entity.UseCollation("utf8mb4_unicode_ci");
-
-        entity.Property(e => e.Rolid)
-                  .HasColumnType("int(11)")
-                  .HasColumnName("ROLID");
-
-        entity.Property(e => e.Roldetail)
-                  .HasMaxLength(255)
-                  .HasColumnName("ROLDETAIL");
-
-        entity.Property(e => e.Rolname)
-                  .IsRequired()
-                  .HasMaxLength(255)
-                  .HasColumnName("ROLNAME");
-      });
-
       modelBuilder.Entity<Trrouteshasdiscipline>(entity =>
       {
         entity.HasKey(e => new { e.Routeid, e.Disciplineid })
@@ -490,39 +467,6 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasForeignKey(d => d.Id)
                   .OnDelete(DeleteBehavior.ClientSetNull)
                   .HasConstraintName("FK_TRUSERHASPENALTY2");
-      });
-
-      modelBuilder.Entity<Truserhaverol>(entity =>
-      {
-        entity.HasKey(e => new { e.Rolid, e.Id })
-                  .HasName("PRIMARY")
-                  .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-
-        entity.ToTable("truserhaverol");
-
-        entity.UseCollation("utf8mb4_unicode_ci");
-
-        entity.HasIndex(e => e.Id, "FK_TRUSERHAVEROL2");
-
-        entity.Property(e => e.Rolid)
-                  .HasColumnType("int(11)")
-                  .HasColumnName("ROLID");
-
-        entity.Property(e => e.Id)
-               
-                  .HasColumnName("UserId");
-
-        entity.HasOne(d => d.Rol)
-                  .WithMany(p => p.Truserhaverols)
-                  .HasForeignKey(d => d.Rolid)
-                  .OnDelete(DeleteBehavior.ClientSetNull)
-                  .HasConstraintName("FK_TRUSERHAVEROL");
-
-        entity.HasOne(d => d.User)
-                  .WithMany(p => p.Truserhaverols)
-                  .HasForeignKey(d => d.Id)
-                  .OnDelete(DeleteBehavior.ClientSetNull)
-                  .HasConstraintName("FK_TRUSERHAVEROL2");
       });
 
       modelBuilder.Entity<Trusershasdiscipline>(entity =>

@@ -49,7 +49,7 @@ const NavMenu = (props) => {
             <ul className="navbar-nav flex-grow">
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/">
-                  Home
+                  Inicio
                 </NavLink>
               </NavItem>
 

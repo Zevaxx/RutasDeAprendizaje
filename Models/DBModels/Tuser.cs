@@ -16,7 +16,7 @@ namespace RutasDeAprendizaje.Models.DBModels
             Tposts = new HashSet<Tpost>();
             Trlearningrouteshassuscribers = new HashSet<Trlearningrouteshassuscriber>();
             Truserhaspenalties = new HashSet<Truserhaspenalty>();
-            Truserhaverols = new HashSet<Truserhaverol>();
+           
             Trusershasdisciplines = new HashSet<Trusershasdiscipline>();
         }
 
@@ -31,7 +31,6 @@ namespace RutasDeAprendizaje.Models.DBModels
         public virtual ICollection<Tpost> Tposts { get; set; }
         public virtual ICollection<Trlearningrouteshassuscriber> Trlearningrouteshassuscribers { get; set; }
         public virtual ICollection<Truserhaspenalty> Truserhaspenalties { get; set; }
-        public virtual ICollection<Truserhaverol> Truserhaverols { get; set; }
         public virtual ICollection<Trusershasdiscipline> Trusershasdisciplines { get; set; }
     }
 }

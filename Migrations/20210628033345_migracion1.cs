@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RutasDeAprendizaje.Migrations
 {
-    public partial class _1Migration : Migration
+    public partial class migracion1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -118,24 +118,6 @@ namespace RutasDeAprendizaje.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PRIMARY", x => x.PENALID);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .Annotation("Relational:Collation", "utf8mb4_unicode_ci");
-
-            migrationBuilder.CreateTable(
-                name: "troles",
-                columns: table => new
-                {
-                    ROLID = table.Column<int>(type: "int(11)", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ROLNAME = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_unicode_ci")
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ROLDETAIL = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_unicode_ci")
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PRIMARY", x => x.ROLID);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .Annotation("Relational:Collation", "utf8mb4_unicode_ci");
@@ -351,34 +333,6 @@ namespace RutasDeAprendizaje.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TRUSERHASPENALTY2",
-                        column: x => x.UserId,
-                        principalTable: "tusers",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .Annotation("Relational:Collation", "utf8mb4_unicode_ci");
-
-            migrationBuilder.CreateTable(
-                name: "truserhaverol",
-                columns: table => new
-                {
-                    ROLID = table.Column<int>(type: "int(11)", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false, collation: "utf8mb4_unicode_ci")
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PRIMARY", x => new { x.ROLID, x.UserId })
-                        .Annotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-                    table.ForeignKey(
-                        name: "FK_TRUSERHAVEROL",
-                        column: x => x.ROLID,
-                        principalTable: "troles",
-                        principalColumn: "ROLID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TRUSERHAVEROL2",
                         column: x => x.UserId,
                         principalTable: "tusers",
                         principalColumn: "UserId",
@@ -765,11 +719,6 @@ namespace RutasDeAprendizaje.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "FK_TRUSERHAVEROL2",
-                table: "truserhaverol",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "FK_TRUSERSHASDISCIPLINE2",
                 table: "trusershasdiscipline",
                 column: "DISCIPLINEID");
@@ -860,9 +809,6 @@ namespace RutasDeAprendizaje.Migrations
                 name: "truserhaspenalty");
 
             migrationBuilder.DropTable(
-                name: "truserhaverol");
-
-            migrationBuilder.DropTable(
                 name: "trusershasdiscipline");
 
             migrationBuilder.DropTable(
@@ -873,9 +819,6 @@ namespace RutasDeAprendizaje.Migrations
 
             migrationBuilder.DropTable(
                 name: "tpenalties");
-
-            migrationBuilder.DropTable(
-                name: "troles");
 
             migrationBuilder.DropTable(
                 name: "tdisciplines");
