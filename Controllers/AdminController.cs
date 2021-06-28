@@ -11,10 +11,10 @@ namespace RutasDeAprendizaje.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize(Roles = "admin")]
   public class AdminController : ControllerBase
   {
     private readonly RoleManager<IdentityRole> roleManager;
-
     public AdminController(RoleManager<IdentityRole> roleManager)
     {
       this.roleManager = roleManager;

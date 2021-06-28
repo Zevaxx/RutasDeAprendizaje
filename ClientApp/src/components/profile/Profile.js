@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import authService from "../api-authorization/AuthorizeService";
 
 const Profile = (props) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState({});
+  const [items, setItems] = useState({});
 
   useEffect(() => {
     const guid = async () => {
@@ -17,9 +18,9 @@ const Profile = (props) => {
         .then((res) => res.json())
         .then(
           (result) => {
-                setIsLoaded(true);
-                console.log(result);
-                setItems(result);
+            setIsLoaded(true);
+            console.log(result);
+            setItems(result);
           },
           // Nota: es importante manejar errores aquí y no en
           // un bloque catch() para que no interceptemos errores
@@ -41,7 +42,20 @@ const Profile = (props) => {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
-      return <div>{items.userName} { items.role}</div>;
+    return (
+      <div>
+        <p>
+          User name: {items.userName}, Role:{items.role}
+        </p>
+        {items.role === "admin" ? (
+          <div>
+            <Link to="/admin"> Administración </Link>
+          </div>
+        ) : (
+          <div>no es admin</div>
+        )}
+      </div>
+    );
   }
 };
 
