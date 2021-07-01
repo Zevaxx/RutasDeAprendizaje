@@ -46,15 +46,25 @@ namespace RutasDeAprendizaje.Controllers
       var user = (from u in _context.Tusers
                   join thr in _context.UserRoles
                   on u.Id equals thr.UserId
-                  join r in _context.Roles
+                  join r in _context.Roles 
                   on thr.RoleId equals r.Id
                   where u.Id == id
                   select new
                   {
                     userName = u.UserName,
                     role = r.Name
-                  }).First();
-
+                  }).FirstOrDefault();
+      
+            if (user == null)
+            {
+                user = (from u in _context.Tusers
+                 where u.Id == id
+                 select new
+                 {
+                     userName = u.UserName,
+                     role = "user"
+                 }).FirstOrDefault();
+            }
 
       return Ok(user);
 

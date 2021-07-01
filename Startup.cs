@@ -12,6 +12,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RutasDeAprendizaje.Models.DBModels;
+using RutasDeAprendizaje.Helpers;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace RutasDeAprendizaje
 {
@@ -65,19 +71,28 @@ namespace RutasDeAprendizaje
           //.AddDefaultTokenProviders()
           .AddEntityFrameworkStores<RutasdeaprendizajeContext>();
 
-      services.AddIdentityServer()
-          .AddApiAuthorization<Tuser, RutasdeaprendizajeContext>();
-
-      services.AddAuthentication()
-          .AddIdentityServerJwt();
-
-      services.AddControllersWithViews();
-      services.AddRazorPages();
+            services.AddIdentityServer()
+             .AddApiAuthorization<Tuser, RutasdeaprendizajeContext>()
+             .AddProfileService<ProfileService>();
 
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication()
+              .AddJwtBearer(cfg =>
+              {
+                  cfg.TokenValidationParameters = new TokenValidationParameters
+                  {
+                   
+                    RoleClaimType = "role"  
+                   
+                  };
+              }).AddIdentityServerJwt();
 
-      // In production, the React files will be served from this directory
-      services.AddSpaStaticFiles(configuration =>
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
+        // In production, the React files will be served from this directory
+        services.AddSpaStaticFiles(configuration =>
       {
         configuration.RootPath = "ClientApp/build";
       });
@@ -104,9 +119,14 @@ namespace RutasDeAprendizaje
 
       app.UseRouting();
 
-      app.UseAuthentication();
-      app.UseIdentityServer();
-      app.UseAuthorization();
+        app.UseIdentityServer();
+        app.UseAuthentication();
+        app.UseAuthorization();
+            
+      
+
+      //app.UseStatusCodePages();
+
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllerRoute(

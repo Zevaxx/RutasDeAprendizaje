@@ -11,7 +11,7 @@ const Profile = (props) => {
     const guid = async () => {
       const user = await authService.getUser();
       const token = await authService.getAccessToken();
-      // console.log(token);
+      console.log(token);
       fetch(`api/user/${user.sub}`, {
         headers: !token ? {} : { Authorization: `Bearer ${token}` },
       })
@@ -19,7 +19,7 @@ const Profile = (props) => {
         .then(
           (result) => {
             setIsLoaded(true);
-            console.log(result);
+            // console.log(result);
             setItems(result);
           },
           // Nota: es importante manejar errores aquí y no en
