@@ -691,6 +691,11 @@ namespace RutasDeAprendizaje.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("UserDescription")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("USERDESCRIPTION");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -699,11 +704,6 @@ namespace RutasDeAprendizaje.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("USERCOMUNITYPENALTIES");
-
-                    b.Property<string>("Userloginstatus")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("USERLOGINSTATUS");
 
                     b.HasKey("Id")
                         .HasName("PRIMARY");

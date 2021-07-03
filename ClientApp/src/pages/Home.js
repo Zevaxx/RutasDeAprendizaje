@@ -2,11 +2,18 @@ import React from "react";
 import { Testimonial, Image } from "./styles";
 import FotoTop from "../images/Home/imagen1.jpg";
 import FotoBody from "../images/Home/foto2.jpg";
+import { FormattedMessage } from "react-intl";
 
 export const Home = () => {
   return (
     <div>
-      <h1>Rutas de apredizaje!</h1>
+      <h1>
+        <FormattedMessage
+          id="app.layout.title"
+          defaultMessage="Rutas de aprendizaje"
+        />
+        !
+      </h1>
       <section id="header">
         <div className="container mt-5">
           <div className="row">
@@ -17,13 +24,17 @@ export const Home = () => {
             </div>
             <div className="col-md-6 col-sm-6">
               <div className="header-content-right">
-                <h1 className="display-4">Tienes algún curso en mente?</h1>
+                <h1 className="display-4">
+                  <FormattedMessage
+                    id="app.home.title1"
+                    defaultMessage="Do you have a course in mind?"
+                  />
+                </h1>
                 <p className="mt-5">
-                  Crea, comparte y aprende. Inspírate con profesionales
-                  destacados del sector aprendiendo sus técnicas y secretos.
-                  Aprende en comunidad, compartiendo ideas y proyectos con miles
-                  de creativos del mundo. Aprende con los mejores. La Comunidad
-                  Creativa.
+                  <FormattedMessage
+                    id="app.home.subtitle1"
+                    defaultMessage="Create, share and learn. Get inspired by leading professionals in the sector learning their techniques and secrets. Learn in community, sharing ideas and projects with thousands of creatives around the world. Learn with the best. The Creative Community."
+                  />
                 </p>
                 {/* <a
                     href="#"
@@ -40,10 +51,7 @@ export const Home = () => {
       <Testimonial>
         <div className="container">
           <p className="h2 mb-2">
-            No te amargues con tu propio fracaso ni se lo cargues a otro.
-            Acéptate ahora o seguirás justificándote como un niño. Recuerda que
-            cualquier momento es bueno para comenzar y que ninguno es tan
-            terrible para claudicar.
+            <FormattedMessage id="app.home.cite" />
           </p>
           <p className="h4">- Pablo Neruda</p>
         </div>
@@ -60,8 +68,7 @@ export const Home = () => {
             <div className="col-md-6 my-auto">
               <div className="info-right">
                 <p>
-                  Estos son algunos de nuestros colavoradores más activos dentro
-                  de nuestra ruta de aprendizaje.
+                  <FormattedMessage id="app.home.subtitle2" />
                 </p>
                 {/* <a href="#" className="btn btn-outline-secondary btn-lg">
                     Ver Más
@@ -75,20 +82,12 @@ export const Home = () => {
       <section id="info-two">
         <div className="container">
           <div className="row my-5">
-            <div className="col-md-6">
-              <h2>¿Tienes dudas?</h2>
+            <div className="col-md-12">
+              <h2>
+                <FormattedMessage id="app.home.title2" />
+              </h2>
               <p>
-                Escríbenos en el siguiente formulario y aclararemos todas tus
-                consultas.
-              </p>
-            </div>
-            <div className="col-md-6">
-              <h2>¿Qué nos destaca?</h2>
-              <p>
-                En Rutas de Aprendizaje podrás realizar todos los cursos que
-                sean de tu interés, la veces que quieras y cuando quieras, ya
-                que todos nuestro colaboradores lo hacen con el fin de comparitr
-                sus conocimientos. ¡Es Gratutito!
+                <FormattedMessage id="app.home.subtitle3" />
               </p>
             </div>
           </div>

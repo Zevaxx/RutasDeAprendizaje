@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
 using System.IO;
+using System.Dynamic;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -40,31 +41,35 @@ namespace RutasDeAprendizaje.Controllers
     //GET api/<UserController>/5
 
     [HttpGet("{id}")]
-    public ActionResult<Tuser> GetUser(String id)
+    public async Task<ActionResult<Tuser>> GetUser(String id)
     {
 
-      var user = (from u in _context.Tusers
-                  join thr in _context.UserRoles
-                  on u.Id equals thr.UserId
-                  join r in _context.Roles 
-                  on thr.RoleId equals r.Id
-                  where u.Id == id
-                  select new
-                  {
-                    userName = u.UserName,
-                    role = r.Name
-                  }).FirstOrDefault();
-      
-            if (user == null)
-            {
-                user = (from u in _context.Tusers
-                 where u.Id == id
-                 select new
-                 {
-                     userName = u.UserName,
-                     role = "user"
-                 }).FirstOrDefault();
-            }
+
+      var user = await userManager.FindByIdAsync(id);
+      // var user = (from u in _context.Tusers
+      //             join thr in _context.UserRoles
+      //             on u.Id equals thr.UserId
+      //             join r in _context.Roles
+      //             on thr.RoleId equals r.Id
+      //             where u.Id == id
+      //             select new
+      //             {
+      //               userName = u.UserName,
+      //               role = r.Name,
+      //               userdescription = u.UserDescription
+      //             }).FirstOrDefault();
+
+      // if (user == null)
+      // {
+      //   user = (from u in _context.Tusers
+      //           where u.Id == id
+      //           select new
+      //           {
+      //             userName = u.UserName,
+      //             role = "user",
+      //             userdescription = u.UserDescription
+      //           }).FirstOrDefault();
+      // }
 
       return Ok(user);
 
@@ -121,17 +126,40 @@ namespace RutasDeAprendizaje.Controllers
       }
       catch (Exception e)
       {
-
       }
 
       return isSaveSuccess;
     }
 
     // PUT api/<UserController>/5
-    // [HttpPut("{id}")]
-    // public void Put(int id, [FromBody] string value)
-    // {
-    // }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> ModifyUser([FromBody] ExpandoObject requestdata)
+    {
+
+      var data = ((IDictionary<string, object>)requestdata);
+
+      var user = await userManager.FindByIdAsync(data["id"].ToString());
+
+
+      if (user == null || data["id"] == null)
+      {
+        return BadRequest();
+      }
+
+      user.UserDescription = data["description"].ToString();
+
+
+      try
+      {
+        _context.SaveChanges();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+
+      }
+
+      return Ok(user);
+    }
 
     // DELETE api/<UserController>/5
     // [HttpDelete("{id}")]

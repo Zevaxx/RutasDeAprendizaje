@@ -3,6 +3,7 @@ import { NavItem, NavLink } from "reactstrap";
 import { Link } from "react-router-dom";
 import authService from "./AuthorizeService";
 import { ApplicationPaths } from "./ApiAuthorizationConstants";
+import { FormattedMessage } from "react-intl";
 
 export class LoginMenu extends Component {
   constructor(props) {
@@ -59,7 +60,10 @@ export class LoginMenu extends Component {
             className="text-dark border rounded"
             to={"/perfil"}
           >
-            Perfil
+            <FormattedMessage
+              id="app.layout.profile"
+              defaultMessage="profile "
+            />
           </NavLink>
         </NavItem>
         <NavItem>
@@ -68,7 +72,11 @@ export class LoginMenu extends Component {
             className="text-dark border rounded"
             to={profilePath}
           >
-            Adm Cuenta {userName}
+            <FormattedMessage
+              id="app.layout.admCuenta"
+              defaultMessage="Adm Cuenta de "
+            />
+            {userName}
           </NavLink>
         </NavItem>
         <NavItem>
@@ -77,7 +85,7 @@ export class LoginMenu extends Component {
             className="text-dark border rounded"
             to={logoutPath}
           >
-            Logout
+            <FormattedMessage id="app.layout.logout" defaultMessage="Logout " />
           </NavLink>
         </NavItem>
       </Fragment>

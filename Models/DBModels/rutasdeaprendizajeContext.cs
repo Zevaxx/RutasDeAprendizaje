@@ -32,17 +32,17 @@ namespace RutasDeAprendizaje.Models.DBModels
     public virtual DbSet<Trcoursehastest> Trcoursehastests { get; set; }
     public virtual DbSet<Trcoursesinroute> Trcoursesinroutes { get; set; }
     public virtual DbSet<Trlearningrouteshassuscriber> Trlearningrouteshassuscribers { get; set; }
-   
+
     public virtual DbSet<Trrouteshasdiscipline> Trrouteshasdisciplines { get; set; }
     public virtual DbSet<Truserhaspenalty> Truserhaspenalties { get; set; }
-    
+
     public virtual DbSet<Trusershasdiscipline> Trusershasdisciplines { get; set; }
     public virtual DbSet<Ttest> Ttests { get; set; }
     public virtual DbSet<Tuser> Tusers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
- 
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -88,7 +88,7 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasColumnName("ROUTEID");
 
         entity.Property(e => e.Id)
-                
+
                   .HasColumnName("UserID");
 
         entity.HasOne(d => d.Course)
@@ -136,9 +136,9 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .IsRequired()
                   .HasColumnName("COURSEDESCRIPTION");
 
-          entity.Property(e => e.Coursescore)
-                  .HasColumnType("int(11)")
-                  .HasColumnName("COURSESCORE");
+        entity.Property(e => e.Coursescore)
+                .HasColumnType("int(11)")
+                .HasColumnName("COURSESCORE");
 
         entity.Property(e => e.Coursetimelength)
                   .HasColumnType("int(11)")
@@ -212,12 +212,12 @@ namespace RutasDeAprendizaje.Models.DBModels
                 .IsRequired()
                 .HasColumnName("ROUTEDESCRIPTION");
 
-          entity.Property(e => e.Routescore)
-                  .HasColumnType("int(11)")
-                  .HasColumnName("ROUTESCORE");
+        entity.Property(e => e.Routescore)
+                .HasColumnType("int(11)")
+                .HasColumnName("ROUTESCORE");
 
         entity.Property(e => e.Id)
-                 
+
                   .HasColumnName("UserId");
 
         entity.HasOne(d => d.Com)
@@ -288,7 +288,7 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasColumnName("POSTDATE");
 
         entity.Property(e => e.Id)
-                
+
                   .HasColumnName("UserId");
 
         entity.HasOne(d => d.Com)
@@ -387,7 +387,7 @@ namespace RutasDeAprendizaje.Models.DBModels
                   .HasColumnName("ROUTEID");
 
         entity.Property(e => e.Id)
-                  
+
                   .HasColumnName("UserId");
 
         entity.HasOne(d => d.Route)
@@ -482,7 +482,7 @@ namespace RutasDeAprendizaje.Models.DBModels
         entity.HasIndex(e => e.Disciplineid, "FK_TRUSERSHASDISCIPLINE2");
 
         entity.Property(e => e.Id)
-            
+
                   .HasColumnName("UserId");
 
         entity.Property(e => e.Disciplineid)
@@ -539,17 +539,17 @@ namespace RutasDeAprendizaje.Models.DBModels
         entity.UseCollation("utf8mb4_unicode_ci");
 
         entity.Property(e => e.Id)
-                
+
                   .HasColumnName("UserId");
 
         entity.Property(e => e.Usercomunitypenalties)
                   .HasMaxLength(255)
                   .HasColumnName("USERCOMUNITYPENALTIES");
 
-        entity.Property(e => e.Userloginstatus)
-                 
+        entity.Property(e => e.UserDescription)
+
                   .HasMaxLength(255)
-                  .HasColumnName("USERLOGINSTATUS");
+                  .HasColumnName("USERDESCRIPTION");
 
         //entity.Property(e => e.Username)
         //    .IsRequired()

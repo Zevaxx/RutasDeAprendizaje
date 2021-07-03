@@ -30,14 +30,16 @@ const NavMenu = (props) => {
         light
       >
         <Container>
-          <NavbarBrand tag={Link} to="/">
-            <FormattedMessage
-              id="app.layout.title"
-              defaultMessage="Rutas de aprendizaje"
-            />
+          <NavbarBrand className="d-flex" tag={Link} to="/">
+            <div className="mx-2">
+              <FormattedMessage
+                id="app.layout.title"
+                defaultMessage="Rutas de aprendizaje"
+              />
+            </div>
             <select value={context.currentLocale} onChange={context.selectLang}>
-              <option value="en-US">English</option>
               <option value="es">Español</option>
+              <option value="en">English</option>
             </select>
           </NavbarBrand>
           <NavbarToggler onClick={toggleNavbar} className="mr-2" />
@@ -49,7 +51,10 @@ const NavMenu = (props) => {
             <ul className="navbar-nav flex-grow">
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/">
-                  Inicio
+                  <FormattedMessage
+                    id="app.layout.home"
+                    defaultMessage="Home"
+                  />
                 </NavLink>
               </NavItem>
 

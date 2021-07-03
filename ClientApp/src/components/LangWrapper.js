@@ -1,32 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Spanish from "../lang/es.json";
 import English from "../lang/en.json";
 import { IntlProvider } from "react-intl";
-
 export let Context = React.createContext();
 
-const locale = navigator.language;
-
-let lang;
-
-if (locale.includes("en-US")) {
-  lang = English;
-} else {
-  lang = Spanish;
-}
-
 const LangWrapper = (props) => {
-  const [currentLocale, setCurrentLocale] = useState(locale);
-  const [messages, setMessages] = useState(lang);
+  const [currentLocale, setCurrentLocale] = useState("es");
+  const [messages, setMessages] = useState(Spanish);
+
+  useEffect(() => {
+    console.log("idioma a cargar " + currentLocale);
+    localStorage.getItem("selectedLang") &&
+      setCurrentLocale(localStorage.getItem("selectedLang"));
+    console.log(
+      "idioma guardado localmente " + localStorage.getItem("selectedLang")
+    );
+    localStorage.getItem("selectedLang") === "en" && setMessages(English);
+    localStorage.getItem("selectedLang") === "es" && setMessages(Spanish);
+  }, [currentLocale]);
 
   const selectLang = (e) => {
-    const newLocale = e.target.value;
-    setCurrentLocale(newLocale);
-    if (newLocale === "es") {
-      setMessages(Spanish);
-    } else {
-      setMessages(English);
-    }
+    localStorage.setItem("selectedLang", e.target.value);
+    setCurrentLocale(e.target.value);
   };
 
   return (

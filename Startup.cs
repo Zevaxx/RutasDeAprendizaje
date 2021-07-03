@@ -2,21 +2,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
-//using RutasDeAprendizaje.Data;
-using RutasDeAprendizaje.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RutasDeAprendizaje.Models.DBModels;
 using RutasDeAprendizaje.Helpers;
-using IdentityModel;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace RutasDeAprendizaje
@@ -45,57 +38,56 @@ namespace RutasDeAprendizaje
 
       // Replace 'YourDbContext' with the name of your own DbContext derived class.
       services.AddDbContext<RutasdeaprendizajeContext>(
-          dbContextOptions => dbContextOptions
-            .UseMySql(connectionString, serverVersion)
-            .EnableSensitiveDataLogging() // <-- These two calls are optional but help
-             .EnableDetailedErrors()       // <-- with debugging (remove for production).
-        );
+        dbContextOptions => dbContextOptions
+          .UseMySql(connectionString, serverVersion)
+          .EnableSensitiveDataLogging() // <-- These two calls are optional but help
+          .EnableDetailedErrors()       // <-- with debugging (remove for production).
+      );
 
 
-            services.Configure<IdentityOptions>(options =>
-           {
-               options.Password.RequiredLength = 5;
-               options.Password.RequireNonAlphanumeric = false;
-               options.Password.RequireLowercase = false;
-               options.Password.RequireUppercase = false;
-               options.Password.RequireDigit = false;
-           }
-            );
-      
-                services.AddDatabaseDeveloperPageExceptionFilter();
+      services.Configure<IdentityOptions>(options =>
+        {
+          options.Password.RequiredLength = 5;
+          options.Password.RequireNonAlphanumeric = false;
+          options.Password.RequireLowercase = false;
+          options.Password.RequireUppercase = false;
+          options.Password.RequireDigit = false;
+        }
+      );
+
+      services.AddDatabaseDeveloperPageExceptionFilter();
 
       services.AddDefaultIdentity<Tuser>(options => options.SignIn.RequireConfirmedAccount = true)
-          //.AddDefaultUI()
-          .AddRoles<IdentityRole>()
-          .AddRoleManager<RoleManager<IdentityRole>>()
-          //.AddDefaultTokenProviders()
-          .AddEntityFrameworkStores<RutasdeaprendizajeContext>();
+        //.AddDefaultUI()
+        .AddRoles<IdentityRole>()
+        .AddRoleManager<RoleManager<IdentityRole>>()
+        //.AddDefaultTokenProviders()
+        .AddEntityFrameworkStores<RutasdeaprendizajeContext>();
 
-            services.AddIdentityServer()
-             .AddApiAuthorization<Tuser, RutasdeaprendizajeContext>()
-             .AddProfileService<ProfileService>();
+      services.AddIdentityServer()
+       .AddApiAuthorization<Tuser, RutasdeaprendizajeContext>()
+       .AddProfileService<ProfileService>();
 
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            services.AddAuthentication()
-              .AddJwtBearer(cfg =>
-              {
-                  cfg.TokenValidationParameters = new TokenValidationParameters
-                  {
-                   
-                    RoleClaimType = "role"  
-                   
-                  };
-              }).AddIdentityServerJwt();
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      services.AddAuthentication()
+        .AddJwtBearer(cfg =>
+        {
+          cfg.TokenValidationParameters = new TokenValidationParameters
+          {
+            RoleClaimType = "role"
+          };
+        }).AddIdentityServerJwt();
 
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+      services.AddControllersWithViews();
+      services.AddRazorPages();
 
-        // In production, the React files will be served from this directory
-        services.AddSpaStaticFiles(configuration =>
-      {
-        configuration.RootPath = "ClientApp/build";
-      });
+      // In production, the React files will be served from this directory
+      services.AddSpaStaticFiles(configuration =>
+        {
+          configuration.RootPath = "ClientApp/build";
+        }
+      );
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,13 +111,9 @@ namespace RutasDeAprendizaje
 
       app.UseRouting();
 
-        app.UseIdentityServer();
-        app.UseAuthentication();
-        app.UseAuthorization();
-            
-      
-
-      //app.UseStatusCodePages();
+      app.UseIdentityServer();
+      app.UseAuthentication();
+      app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {

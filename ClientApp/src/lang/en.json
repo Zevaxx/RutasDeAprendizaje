@@ -1,3 +1,13 @@
 {
-  "app.layout.title": "Learning Routes"
+  "app.layout.title": "Learning Routes",
+  "app.layout.home": "Home",
+  "app.layout.admCuenta": "Account ",
+  "app.layout.profile": "Profile",
+  "app.layout.logout": "Logout",
+  "app.home.title1": "Do you have a course in mind?",
+  "app.home.subtitle1": "Create, share and learn. Get inspired by leading professionals in the sector learning their techniques and secrets. Learn in community, sharing ideas and projects with thousands of creatives around the world. Learn with the best. The Creative Community.",
+  "app.home.cite": "Don't be bitter about your own failure or blame it on someone else. Accept yourself now or you will continue to justify yourself as a child. Remember that any moment is a good time to start and that no moment is so terrible to give up.",
+  "app.home.subtitle2": "These are some of our most active collaborators within our learning path.",
+  "app.home.title2": "What makes us stand out?",
+  "app.home.subtitle3": "In Learning Routes you can take all the courses that are of interest to you, as often as you want and when you want, since all of our collaborators do it in order to share their knowledge. It's Free!"
 }
