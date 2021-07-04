@@ -8,7 +8,7 @@ const FetchData = async (link, body = null, method = "GET") => {
     headers: !token ? {} : { Authorization: `Bearer ${token}` },
   };
 
-  if (method != "GET" || method != "DELETE") {
+  if (method !== "GET" || method !== "DELETE") {
     petition.headers["Content-Type"] = "application/json";
     petition.body = JSON.stringify(body);
   }

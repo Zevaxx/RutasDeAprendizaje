@@ -2,14 +2,34 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import authService from "../api-authorization/AuthorizeService";
 import imgUsuarioDefault from "../../images/Profile/perfildeusuario.jpg";
-import { Button } from "reactstrap";
+import {
+  Button,
+  Input,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+} from "reactstrap";
 import FetchData from "../../helpers/FetchData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faUserCheck,
+  faMapSigns,
+  faBriefcase,
+  faUserGraduate,
+  faGraduationCap,
+  faCoins,
+  faImage,
+} from "@fortawesome/free-solid-svg-icons";
+import { UserDescription } from "./styles";
 import "../../css/profile.css";
 
 const Profile = (props) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useState({});
+  const [userDescription, setUserDescription] = useState("");
 
   useEffect(() => {
     const guid = async () => {
@@ -22,6 +42,7 @@ const Profile = (props) => {
         .then(
           (result) => {
             setIsLoaded(true);
+            console.log(result);
             setUser(result);
           },
           (error) => {
@@ -36,15 +57,14 @@ const Profile = (props) => {
     guid();
   }, []);
 
-  const ModifyUserInfo = async (event) => {
+  const ModifyUserInfo = async (userDescription) => {
     let user = await authService.getUser();
+    console.log(userDescription || "hola");
     let newUser = await FetchData(
       `api/user/${user.sub}`,
-      { id: user.sub, description: "hola! 🧨👀💋, esta si que si" },
+      { id: user.sub, description: userDescription },
       "PUT"
     );
-    console.log("acaaaa esta el nuevo usuario");
-    console.log(newUser);
     setUser(newUser);
   };
 
@@ -61,72 +81,125 @@ const Profile = (props) => {
               <div className="perfil-usuario-avatar">
                 <img src={imgUsuarioDefault} alt="img-avatar" />
                 <button type="button" className="boton-avatar">
-                  <i className="far fa-image"></i>
+                  <FontAwesomeIcon icon={faImage}></FontAwesomeIcon>
                 </button>
               </div>
               <button type="button" className="boton-portada">
-                <i className="far fa-image"></i> Cambiar fondo
+                <FontAwesomeIcon icon={faImage}></FontAwesomeIcon>
+                Cambiar fondo
               </button>
             </div>
           </div>
           <div className="perfil-usuario-body">
             <div className="perfil-usuario-bio">
               <h3 className="titulo">{user.userName}</h3>
-              <p className="texto m-auto">
-                {user.userDescription || "Agrega una descripción"}
-              </p>
-              <Button type="button" onClick={() => ModifyUserInfo()}>
-                cambiar descripión
-              </Button>
+              <h5 className="titulo">{user.userRole}</h5>
+              <div className="texto m-auto d-flex">
+                {user.userDescription ? (
+                  <>
+                    <UserDescription> {user.userDescription}</UserDescription>
+                    <Button type="button" onClick={() => ModifyUserInfo("")}>
+                      <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Input
+                      type="text"
+                      name="userDescription"
+                      placeholder="Agrega una descripción"
+                      defaultValue=""
+                      onChange={(e) => setUserDescription(e.target.value)}
+                    ></Input>
+                    <Button
+                      type="button"
+                      onClick={() => ModifyUserInfo(userDescription)}
+                    >
+                      Actualiza descripcion
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
             <div className="perfil-usuario-footer">
               <ul className="lista-datos">
                 <li>
-                  <i className="icono fas fa-user-check"></i> Nombre:
+                  <FontAwesomeIcon icon={faUserCheck}></FontAwesomeIcon> Nombre:
+                  {user.userName}
                 </li>
+
                 <li>
-                  <i className="icono fas fa-map-signs"></i> Usuario:
-                </li>
-                <li>
-                  <i className="icono fas fa-briefcase"></i> Rutas:
+                  <FontAwesomeIcon icon={faBriefcase}></FontAwesomeIcon> Rutas:
+                  {user.rutasCreadas?.length == 0 ? (
+                    <h5>No tienes rutas creadas</h5>
+                  ) : (
+                    user.rutasCreadas?.map((ruta) => (
+                      <div>
+                        <Card>
+                          <CardBody>
+                            <CardTitle tag="h5">Card title</CardTitle>
+                            <CardSubtitle tag="h6" className="mb-2 text-muted">
+                              Card subtitle
+                            </CardSubtitle>
+                            <Button>Button</Button>
+                          </CardBody>
+                        </Card>
+                      </div>
+                    ))
+                  )}
                 </li>
               </ul>
             </div>
             <div className="perfil-usuario-actividad">
               <ul className="lista-datos">
                 <li>
-                  <i className="icono fas fa-user-graduate"></i> Cursos
-                  Suscritos:
+                  <FontAwesomeIcon icon={faUserGraduate}></FontAwesomeIcon>
+                  Rutas Suscritas:
                 </li>
               </ul>
-              <p className="texto">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              <div>
+                {user.rutasSuscritas?.length === 0 ? (
+                  <h5>No tienes rutas suscritas</h5>
+                ) : (
+                  user.rutasSuscritas?.map((ruta) => (
+                    <div>
+                      <Card>
+                        <CardBody>
+                          <CardTitle tag="h5">Card title</CardTitle>
+                          <CardSubtitle tag="h6" className="mb-2 text-muted">
+                            Card subtitle
+                          </CardSubtitle>
+                          <Button>Button</Button>
+                        </CardBody>
+                      </Card>
+                    </div>
+                  ))
+                )}
+              </div>
 
-              <ul className="lista-datos">
+              {/* <ul className="lista-datos">
                 <li>
-                  <i className="icono fas fa-graduation-cap"></i> Cursos
-                  Creados:
+                  <FontAwesomeIcon icon={faGraduationCap}></FontAwesomeIcon>
+                  Cursos Creados:
                 </li>
-              </ul>
-              <p className="texto">
+              </ul> */}
+              {/* <p className="texto">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              </p> */}
             </div>
 
             <div className="perfil-usuario-actividad">
               <ul className="lista-datos">
                 <li>
-                  <i className="icono fas fa-coins"></i> Descripción de su
-                  Actividad:
+                  <FontAwesomeIcon icon={faCoins}></FontAwesomeIcon>
+                  Descripción de su Actividad:
                 </li>
               </ul>
             </div>
           </div>
         </section>
-        {user.role === "admin" ? (
+        {user.userRole?.find((roles) => roles === "admin") ? (
           <div>
             <Link to="/admin"> Administración </Link>
           </div>

@@ -44,34 +44,23 @@ namespace RutasDeAprendizaje.Controllers
     public async Task<ActionResult<Tuser>> GetUser(String id)
     {
 
+      var dataReturn = await this.SerializerUser(id);
 
-      var user = await userManager.FindByIdAsync(id);
-      // var user = (from u in _context.Tusers
-      //             join thr in _context.UserRoles
-      //             on u.Id equals thr.UserId
-      //             join r in _context.Roles
-      //             on thr.RoleId equals r.Id
-      //             where u.Id == id
-      //             select new
-      //             {
-      //               userName = u.UserName,
-      //               role = r.Name,
-      //               userdescription = u.UserDescription
-      //             }).FirstOrDefault();
+      return Ok(dataReturn);
 
-      // if (user == null)
+      // var user = await userManager.FindByIdAsync(id);
+      // var userRole = await userManager.GetRolesAsync(user);
+      // if (userRole[0] == null)
       // {
-      //   user = (from u in _context.Tusers
-      //           where u.Id == id
-      //           select new
-      //           {
-      //             userName = u.UserName,
-      //             role = "user",
-      //             userdescription = u.UserDescription
-      //           }).FirstOrDefault();
+      //   userRole.Add("user");
       // }
-
-      return Ok(user);
+      // var dataReturn = new
+      // {
+      //   UserName = user.UserName,
+      //   Email = user.Email,
+      //   userRole = userRole
+      // };
+      // return Ok(dataReturn);
 
     }
 
@@ -138,17 +127,14 @@ namespace RutasDeAprendizaje.Controllers
 
       var data = ((IDictionary<string, object>)requestdata);
 
-      var user = await userManager.FindByIdAsync(data["id"].ToString());
-
-
-      if (user == null || data["id"] == null)
+      if (data["id"] == null || data["description"] == null)
       {
         return BadRequest();
       }
 
+      var user = await userManager.FindByIdAsync(data["id"].ToString());
+
       user.UserDescription = data["description"].ToString();
-
-
       try
       {
         _context.SaveChanges();
@@ -157,8 +143,9 @@ namespace RutasDeAprendizaje.Controllers
       {
 
       }
+      var dataReturn = await this.SerializerUser(data["id"].ToString());
 
-      return Ok(user);
+      return Ok(dataReturn);
     }
 
     // DELETE api/<UserController>/5
@@ -166,5 +153,65 @@ namespace RutasDeAprendizaje.Controllers
     // public void Delete(int id)
     // {
     // }
+
+    public async Task<dynamic> SerializerUser(String id)
+    {
+
+
+      var user = await userManager.FindByIdAsync(id);
+
+      var GetUserRole = (from u in _context.Tusers
+                         join thr in _context.UserRoles
+                         on u.Id equals thr.UserId
+                         join r in _context.Roles
+                         on thr.RoleId equals r.Id
+                         where u.Id == id
+                         select new
+                         {
+                           r.Name,
+                         }).ToList();
+
+
+      var RoleArray = GetUserRole.Select(c => { return c.Name; }).ToList();
+
+      var dataReturn = new
+      {
+        userName = user.UserName,
+        email = user.Email,
+        userDescription = user.UserDescription,
+        userRole = RoleArray,
+        rutasCreadas = user.Tlearningroutes,
+        rutasSuscritas = user.Trlearningrouteshassuscribers
+      };
+
+      return dataReturn;
+      // var user = (from u in _context.Tusers
+      //             join thr in _context.UserRoles
+      //             on u.Id equals thr.UserId
+      //             join r in _context.Roles
+      //             on thr.RoleId equals r.Id
+      //             where u.Id == id
+      //             select new
+      //             {
+      //               userName = u.UserName,
+      //               role = r.Name,
+      //               userdescription = u.UserDescription
+      //             }).FirstOrDefault();
+
+      // if (user == null)
+      // {
+      //   user = (from u in _context.Tusers
+      //           where u.Id == id
+      //           select new
+      //           {
+      //             userName = u.UserName,
+      //             role = "user",
+      //             userdescription = u.UserDescription
+      //           }).FirstOrDefault();
+      // }
+
+
+    }
+
   }
 }
