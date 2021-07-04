@@ -1,0 +1,72 @@
+            body {
+                margin: 0;
+                padding: 0;
+                background: url(../img/Fondo.jpg);
+                background-size: cover;
+                font-family: sans-serif;
+                height: 100vh;
+                
+            }
+            
+            .videobox {
+                width: 575px;
+                height: 550px;
+                -moz-border-radius: 20px;
+                -webkit-border-radius: 10px;
+                border-radius: 10px;
+                background: #000000;
+                /* Fondo VideoBox */
+                border: 1px solid #5A5A5A;
+                padding: 10px;
+                -moz-box-shadow: 0px 0px 30px #E3E3E3;
+                -webkit-box-shadow: 0px 0px 30px #E3E3E3;
+                box-shadow: 0px 0px 30px #E3E3E3;
+                text-align: center; 
+            
+            }
+            
+            .mini {
+                background: #ffffff;
+                /* Fondo miniatura */
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+                padding: 5px;
+                height: 73px;
+                width: 100px;
+                -moz-transition: 0.5s;
+                -webkit-transition: 0.5s;
+                -o-transition: 0.5s;
+                transition: 0.5s;
+            }
+            
+            .mini:hover {
+                -moz-transition: 0.5s;
+                -webkit-transition: 0.5s;
+                -o-transition: 0.5s;
+                transition: 0.5s;
+                height: 130px;
+            }
+            
+            .navbar-brand {
+                font-size: 20px;
+                color: #000;
+                font-weight: bold;
+                font-family: 'Titillium Web', sans-serif;
+            }
+            
+            .lista-datos {
+                width: 100%;
+            }
+            
+            .perfil-usuario-actividad {
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 1.25rem;
+                padding: 1.5rem 2rem;
+                box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+                background-color: #fff;
+                border-radius: 19px;
+                width: 99%;
+                
+            }
