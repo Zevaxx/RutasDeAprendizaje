@@ -37,11 +37,11 @@ const NavMenu = (props) => {
                 defaultMessage="Rutas de aprendizaje"
               />
             </div>
-            <select value={context.currentLocale} onChange={context.selectLang}>
-              <option value="es">Español</option>
-              <option value="en">English</option>
-            </select>
           </NavbarBrand>
+          <select value={context.currentLocale} onChange={context.selectLang}>
+            <option value="es">Español</option>
+            <option value="en">English</option>
+          </select>
           <NavbarToggler onClick={toggleNavbar} className="mr-2" />
           <Collapse
             className="d-sm-inline-flex flex-sm-row-reverse"

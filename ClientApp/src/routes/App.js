@@ -8,6 +8,7 @@ import { ApplicationPaths } from "../components/api-authorization/ApiAuthorizati
 import Profile from "../components/profile/Profile";
 import Roles from "../components/profile/admin/roles/Roles";
 import Admin from "../components/profile/admin/Admin";
+import LearningRoutes from "../components/profile/learningroutes/LearningRoutes";
 
 import "../css/custom.css";
 
@@ -18,9 +19,14 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path="/" component={Home} />
-            <AuthorizeRoute exact path="/perfil" component={Profile} />
-            <AuthorizeRoute exact path="/admin" component={Admin} />
-            <AuthorizeRoute exact path="/admin/roles" component={Roles} />
+        <AuthorizeRoute exact path="/perfil" component={Profile} />
+        <AuthorizeRoute
+          exact
+          path="/perfil/mis-rutas"
+          component={LearningRoutes}
+        />
+        <AuthorizeRoute exact path="/admin" component={Admin} />
+        <AuthorizeRoute exact path="/admin/roles" component={Roles} />
         <Route
           path={ApplicationPaths.ApiAuthorizationPrefix}
           component={ApiAuthorizationRoutes}

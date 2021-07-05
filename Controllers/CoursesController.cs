@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RutasDeAprendizaje.Models.DBModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Dynamic;
 
 namespace RutasDeAprendizaje.Controllers
 {
@@ -77,12 +78,23 @@ namespace RutasDeAprendizaje.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
      
         [HttpPost]
-        public async Task<ActionResult<Tcourse>> PostTcourse(Tcourse tcourse)
+        public ActionResult<dynamic> PostTcourse([FromBody] ExpandoObject requestdata)
         {
-            _context.Tcourses.Add(tcourse);
-            await _context.SaveChangesAsync();
+            var data = ((IDictionary<string, object>)requestdata);
 
-            return CreatedAtAction("GetTcourse", new { id = tcourse.Courseid }, tcourse);
+            Tcourse nuevoCurso = new Tcourse();
+
+            nuevoCurso.Comid = Int16.Parse((data["idComunidad"]).ToString());
+            nuevoCurso.Coursename = data["nombreCurso"].ToString();
+            nuevoCurso.Coursedescription = data["nombreDescripcion"].ToString();
+            nuevoCurso.Coursetimelength = Int16.Parse((data["extensionCurso"]).ToString());
+
+            _context.Tcourses.Add(nuevoCurso);
+
+            _context.SaveChanges();
+
+            return Ok(nuevoCurso);
+
         }
 
         // DELETE: api/Courses/5

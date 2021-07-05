@@ -174,14 +174,24 @@ namespace RutasDeAprendizaje.Controllers
 
       var RoleArray = GetUserRole.Select(c => { return c.Name; }).ToList();
 
+      var getRutasCreadas = (from lr in _context.Tlearningroutes
+                             where lr.Id == id
+                             select new
+                             {
+                               lr.Routeid,
+                               lr.Routename,
+                               lr.Routedescription
+                             }).ToList();
+
       var dataReturn = new
       {
         userName = user.UserName,
         email = user.Email,
         userDescription = user.UserDescription,
         userRole = RoleArray,
-        rutasCreadas = user.Tlearningroutes,
-        rutasSuscritas = user.Trlearningrouteshassuscribers
+        rutasCreadas = getRutasCreadas,
+        // rutasSuscritas = user.Trlearningrouteshassuscribers,
+        guid = user.Id
       };
 
       return dataReturn;

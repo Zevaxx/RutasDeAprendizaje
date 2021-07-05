@@ -15,14 +15,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
   faUserCheck,
-  faMapSigns,
+  // faMapSigns,
   faBriefcase,
   faUserGraduate,
-  faGraduationCap,
+  // faGraduationCap,
   faCoins,
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
 import { UserDescription } from "./styles";
+import { FormattedMessage } from "react-intl";
 import "../../css/profile.css";
 
 const Profile = (props) => {
@@ -124,27 +125,35 @@ const Profile = (props) => {
             <div className="perfil-usuario-footer">
               <ul className="lista-datos">
                 <li>
-                  <FontAwesomeIcon icon={faUserCheck}></FontAwesomeIcon> Nombre:
+                  <FontAwesomeIcon icon={faUserCheck}></FontAwesomeIcon>
+                  <FormattedMessage id="app.profile.name" />
                   {user.userName}
                 </li>
 
                 <li>
-                  <FontAwesomeIcon icon={faBriefcase}></FontAwesomeIcon> Rutas:
+                  <div className="d-flex justify-content-around">
+                    <FontAwesomeIcon icon={faBriefcase}></FontAwesomeIcon>{" "}
+                    Rutas:
+                    <div>
+                      <Button tag={Link} to="/perfil/mis-rutas">
+                        ir a mis rutas
+                      </Button>
+                    </div>
+                  </div>
+
                   {user.rutasCreadas?.length == 0 ? (
                     <h5>No tienes rutas creadas</h5>
                   ) : (
                     user.rutasCreadas?.map((ruta) => (
-                      <div>
-                        <Card>
-                          <CardBody>
-                            <CardTitle tag="h5">Card title</CardTitle>
-                            <CardSubtitle tag="h6" className="mb-2 text-muted">
-                              Card subtitle
-                            </CardSubtitle>
-                            <Button>Button</Button>
-                          </CardBody>
-                        </Card>
-                      </div>
+                      <Card key={ruta.routeid}>
+                        <CardBody>
+                          <CardTitle tag="h5">{ruta.routename}</CardTitle>
+                          <CardSubtitle tag="h6" className="mb-2 text-muted">
+                            {ruta.routedescription}
+                          </CardSubtitle>
+                          <Button>Ver ruta</Button>
+                        </CardBody>
+                      </Card>
                     ))
                   )}
                 </li>
@@ -200,7 +209,7 @@ const Profile = (props) => {
           </div>
         </section>
         {user.userRole?.find((roles) => roles === "admin") ? (
-          <div>
+          <div className="profile-background">
             <Link to="/admin"> Administración </Link>
           </div>
         ) : (
