@@ -26,8 +26,14 @@ namespace RutasDeAprendizaje.Controllers
     // GET: api/Learningroutes
     [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tlearningroute>>> GetTlearningroutes()
+    public async Task<ActionResult<IEnumerable<Tlearningroute>>> GetTlearningroutes( int page = 1)
     {
+      int elementosMostrar = 1;
+      decimal totalElementos = _context.Tlearningroutes.Count();
+      decimal totalPaginas = Math.Ceiling(totalElementos/ elementosMostrar);
+      int salto = (page - 1) * elementosMostrar;
+
+
       return await _context.Tlearningroutes.ToListAsync();
     }
 
@@ -43,7 +49,9 @@ namespace RutasDeAprendizaje.Controllers
         return NotFound();
       }
 
-      return tlearningroute;
+
+      var routeToReturn = SerializerLearningRoute(id);
+      return Ok(routeToReturn);
     }
 
     // PUT: api/Learningroutes/5
@@ -225,6 +233,22 @@ namespace RutasDeAprendizaje.Controllers
     public dynamic SerializerLearningRoute(int id)
     {
 
+      
+
+      var cursosInRuta = (from lr in _context.Tlearningroutes
+                          join cir in _context.Trcoursesinroutes
+                          on lr.Routeid equals cir.Routeid
+                          join c in _context.Tcourses
+                          on cir.Courseid equals c.Courseid
+                          where lr.Routeid == id
+                          select new
+                          {
+                            courseId = c.Courseid,
+                            courseName = c.Coursename,
+                            courseDescripcion = c.Coursedescription,
+                            courseLength = c.Coursetimelength,
+                          }).ToList();
+
       var returnNuevaRuta = (from lr in _context.Tlearningroutes
                              join rhd in _context.Trrouteshasdisciplines
                              on lr.Routeid equals rhd.Routeid
@@ -238,7 +262,8 @@ namespace RutasDeAprendizaje.Controllers
                                userId = lr.Id,
                                lrDescrition = lr.Routedescription,
                                lrDificulty = lr.Routedificultlevel,
-                               lrDiscipline = d.Disciplinename
+                               lrDiscipline = d.Disciplinename,
+                               courses = cursosInRuta
                              }).FirstOrDefault();
 
       return returnNuevaRuta;

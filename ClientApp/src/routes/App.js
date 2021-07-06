@@ -11,6 +11,7 @@ import Admin from "../components/profile/admin/Admin";
 import LearningRoutes from "../components/profile/learningroutes/LearningRoutes";
 
 import "../css/custom.css";
+import Courses from "../components/profile/learningroutes/Courses/Courses";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -24,6 +25,11 @@ export default class App extends Component {
           exact
           path="/perfil/mis-rutas"
           component={LearningRoutes}
+        />
+        <AuthorizeRoute
+          exact
+          path="/perfil/courses/:route"
+          component={Courses}
         />
         <AuthorizeRoute exact path="/admin" component={Admin} />
         <AuthorizeRoute exact path="/admin/roles" component={Roles} />

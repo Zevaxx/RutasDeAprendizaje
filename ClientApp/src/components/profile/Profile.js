@@ -9,6 +9,7 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
+  Jumbotron,
 } from "reactstrap";
 import FetchData from "../../helpers/FetchData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -63,8 +64,9 @@ const Profile = (props) => {
     console.log(userDescription || "hola");
     let newUser = await FetchData(
       `api/user/${user.sub}`,
-      { id: user.sub, description: userDescription },
-      "PUT"
+      "PUT",
+
+      { id: user.sub, description: userDescription }
     );
     setUser(newUser);
   };
@@ -206,15 +208,15 @@ const Profile = (props) => {
                 </li>
               </ul>
             </div>
+            {user.userRole?.find((roles) => roles === "admin") ? (
+              <div className="perfil-usuario-actividad">
+                <Link to="/admin"> Administración </Link>
+              </div>
+            ) : (
+              <div>no es admin</div>
+            )}
           </div>
         </section>
-        {user.userRole?.find((roles) => roles === "admin") ? (
-          <div className="profile-background">
-            <Link to="/admin"> Administración </Link>
-          </div>
-        ) : (
-          <div>no es admin</div>
-        )}
       </div>
     );
   }

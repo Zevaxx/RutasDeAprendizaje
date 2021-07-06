@@ -3,14 +3,14 @@ import FetchData from "../../../helpers/FetchData";
 import authService from "../../api-authorization/AuthorizeService";
 import { ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const LearningRoutes = () => {
   const [reload, setReload] = useState(true);
   const [misRutas, setMisRutas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [createRuteForm, setCreateRuteForm] = useState({
-    userId: "",
     lrName: "",
     lrDescription: "",
     lrDificulty: "",
@@ -42,11 +42,17 @@ const LearningRoutes = () => {
     // console.log(createRuteForm);
   };
 
-  const crearRuta = async () => {
+  const crearRuta = async (event) => {
+    event.preventDefault();
     const user = await authService.getUser();
-    setCreateRuteForm({ ...createRuteForm, userId: user.sub });
-    console.log(createRuteForm);
-    await FetchData("api/Learningroutes", "POST", createRuteForm);
+    const dataform = { ...createRuteForm, userId: user.sub };
+    await FetchData("api/Learningroutes", "POST", dataform);
+    setCreateRuteForm({
+      lrName: "",
+      lrDescription: "",
+      lrDificulty: "",
+      lrDiscipline: "",
+    });
     setReload(!reload);
   };
 
@@ -76,6 +82,13 @@ const LearningRoutes = () => {
                     >
                       <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                     </Button>
+                    <Button
+                      tag={Link}
+                      color="success"
+                      to={`/perfil/courses/${misrutas.routeId}`}
+                    >
+                      <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    </Button>
                   </div>
                 </ListGroupItem>
               ))}
@@ -84,45 +97,51 @@ const LearningRoutes = () => {
         </div>
         {/* boton de editar */}
         Nueva ruta de aprendizaje
-        <div>
-          Nombre de la ruta
-          <Input
-            type="text"
-            name="lrName"
-            defaultValue=""
-            onChange={handleForm}
-          ></Input>
-        </div>
-        <div>
-          Descripcion de la ruta
-          <Input
-            type="text"
-            name="lrDescription"
-            defaultValue=""
-            onChange={handleForm}
-          ></Input>
-        </div>
-        <div>
-          Dificultad de la ruta
-          <Input
-            type="number"
-            name="lrDificulty"
-            defaultValue=""
-            onChange={handleForm}
-          ></Input>
-        </div>
-        <div>
-          Diga una disciplina que corresponda
-          <Input
-            type="text"
-            name="lrDiscipline"
-            defaultValue=""
-            onChange={handleForm}
-          ></Input>
-        </div>
-        <Button color="success" type="button" onClick={crearRuta}>
-          Guardar la ruta!
-        </Button>
+        <form onSubmit={crearRuta}>
+          <div>
+            Nombre de la ruta
+            <Input
+              type="text"
+              name="lrName"
+              value={createRuteForm.lrName}
+              onChange={handleForm}
+              required
+            ></Input>
+          </div>
+          <div>
+            Descripcion de la ruta
+            <Input
+              type="text"
+              name="lrDescription"
+              value={createRuteForm.lrDescription}
+              onChange={handleForm}
+              required
+            ></Input>
+          </div>
+          <div>
+            Dificultad de la ruta
+            <Input
+              type="number"
+              name="lrDificulty"
+              value={createRuteForm.lrDificulty}
+              onChange={handleForm}
+              required
+            ></Input>
+          </div>
+          <div>
+            Diga una disciplina que corresponda
+            <Input
+              type="text"
+              name="lrDiscipline"
+              value={createRuteForm.lrDiscipline}
+              onChange={handleForm}
+              required
+            ></Input>
+          </div>
+          <Button color="success" type="submit">
+            Guardar la ruta!
+          </Button>
+        </form>
       </div>
     );
   }
