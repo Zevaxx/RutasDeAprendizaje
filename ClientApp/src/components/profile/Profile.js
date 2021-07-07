@@ -118,7 +118,8 @@ const Profile = (props) => {
                       type="button"
                       onClick={() => ModifyUserInfo(userDescription)}
                     >
-                      Actualiza descripcion
+                      <FormattedMessage id="app.profile.actdescrip" />
+                      
                     </Button>
                   </>
                 )}
@@ -135,10 +136,12 @@ const Profile = (props) => {
                 <li>
                   <div className="d-flex justify-content-around">
                     <FontAwesomeIcon icon={faBriefcase}></FontAwesomeIcon>{" "}
-                    Rutas:
+                    <FormattedMessage id="app.profile.route" />
+                    
                     <div>
                       <Button tag={Link} to="/perfil/mis-rutas">
-                        ir a mis rutas
+                      <FormattedMessage id="app.profile.goroute" />
+                        
                       </Button>
                     </div>
                   </div>
@@ -153,7 +156,9 @@ const Profile = (props) => {
                           <CardSubtitle tag="h6" className="mb-2 text-muted">
                             {ruta.routedescription}
                           </CardSubtitle>
-                          <Button>Ver ruta</Button>
+                          <Button>
+                          <FormattedMessage id="app.profile.seeroute" />
+                          </Button>
                         </CardBody>
                       </Card>
                     ))
@@ -165,7 +170,8 @@ const Profile = (props) => {
               <ul className="lista-datos">
                 <li>
                   <FontAwesomeIcon icon={faUserGraduate}></FontAwesomeIcon>
-                  Rutas Suscritas:
+                  <FormattedMessage id="app.profile.subscribedroute" />
+                  
                 </li>
               </ul>
               <div>
@@ -204,13 +210,15 @@ const Profile = (props) => {
               <ul className="lista-datos">
                 <li>
                   <FontAwesomeIcon icon={faCoins}></FontAwesomeIcon>
-                  Descripción de su Actividad:
+                  <FormattedMessage id="app.profile.descriptionactivity" />
+                  
                 </li>
               </ul>
             </div>
             {user.userRole?.find((roles) => roles === "admin") ? (
-              <div className="perfil-usuario-actividad">
-                <Link to="/admin"> Administración </Link>
+                        <div className="perfil-usuario-actividad">
+                            <Button tag={Link} color="danger" to="/admin"> 
+                            <FormattedMessage id="app.profile.admin" /> </Button>
               </div>
             ) : (
               <div>no es admin</div>

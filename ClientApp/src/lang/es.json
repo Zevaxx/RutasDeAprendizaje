@@ -10,5 +10,12 @@
   "app.home.subtitle2": "Estos son algunos de nuestros colaboradores más activos dentro de nuestra ruta de aprendizaje.",
   "app.home.title2": "¿Qué nos destaca?",
   "app.home.subtitle3": "En Rutas de Aprendizaje podrás realizar todos los cursos que sean de tu interés, la veces que quieras y cuando quieras, ya que todos nuestro colaboradores lo hacen con el fin de comparitr sus conocimientos. ¡Es Gratutito!",
-  "app.profile.name": "Nombre :"
+  "app.profile.name": "Nombre :",
+  "app.profile.route": "Rutas :",
+  "app.profile.goroute": "Ir a mis rutas",
+  "app.profile.seeroute": "Ver Ruta",
+  "app.profile.subscribedroute": "Rutas Suscritas: ",
+  "app.profile.descriptionactivity": "Descripción de su Actividad: ",
+  "app.profile.admin": "Administración",
+  "app.profile.actdescrip": "Actualizar Descripción"
 }

@@ -10,5 +10,12 @@
   "app.home.subtitle2": "These are some of our most active collaborators within our learning path.",
   "app.home.title2": "What makes us stand out?",
   "app.home.subtitle3": "In Learning Routes you can take all the courses that are of interest to you, as often as you want and when you want, since all of our collaborators do it in order to share their knowledge. It's Free!",
-  "app.profile.name": "Name :"
+  "app.profile.name": "Name :",
+  "app.profile.route": "Routes : ",
+  "app.profile.goroute": "Go to my routes",
+  "app.profile.seeroute": "See Route",
+  "app.profile.subscribedroute": "Subscribed Route: ",
+  "app.profile.descriptionactivity": "Description of your Activity: ", 
+  "app.profile.admin": "Administration",
+  "app.profile.actdescrip": "Update Description"
 }
