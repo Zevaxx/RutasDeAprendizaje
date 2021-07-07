@@ -26,15 +26,38 @@ namespace RutasDeAprendizaje.Controllers
     // GET: api/Learningroutes
     [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tlearningroute>>> GetTlearningroutes( int page = 1)
+    public ActionResult<dynamic> GetTlearningroutes( int page = 1)
     {
-      int elementosMostrar = 1;
+      int elementosMostrar = 2;
       decimal totalElementos = _context.Tlearningroutes.Count();
       decimal totalPaginas = Math.Ceiling(totalElementos/ elementosMostrar);
+      int previa = page - 1;
+      int next = page + 1;
+
       int salto = (page - 1) * elementosMostrar;
+      var learningrute = (from lr in _context.Tlearningroutes
+                          select new {
+                            routeId = lr.Routeid,
+                            routeName = lr.Routename,
+                            routeDescription = lr.Routedescription
+                          })
+                          .OrderBy(x=> x.routeId)
+                          .Skip(salto)
+                          .Take(elementosMostrar)
+                          .ToList();
+        
+      var pagination = new {  totalcount = totalElementos,
+                              page = page,
+                              lastPage = totalPaginas,
+                              nextPage = next ,
+                              prevPage = previa
+                              };  
+      var dataToReturn = new {
+        paginations = pagination,
+        learningrutes = learningrute
+      };                   
 
-
-      return await _context.Tlearningroutes.ToListAsync();
+      return Ok(dataToReturn) ;
     }
 
     // GET: api/Learningroutes/5
