@@ -9,6 +9,7 @@ import Profile from "../components/profile/Profile";
 import Roles from "../components/profile/admin/roles/Roles";
 import Admin from "../components/profile/admin/Admin";
 import LearningRoutes from "../components/profile/learningroutes/LearningRoutes";
+import LearningRoutesPublic from "../pages/LearningRoutesPublic";
 
 import "../css/custom.css";
 import Courses from "../components/profile/learningroutes/Courses/Courses";
@@ -26,6 +27,7 @@ export default class App extends Component {
           path="/perfil/mis-rutas"
           component={LearningRoutes}
         />
+        <Route exact path="/ruta/:route" component={LearningRoutesPublic} />
         <AuthorizeRoute
           exact
           path="/perfil/courses/:route"

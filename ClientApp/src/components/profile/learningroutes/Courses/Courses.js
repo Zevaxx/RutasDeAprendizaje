@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import FetchData from "../../../../helpers/FetchData";
 import { ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import authService from "../../..//api-authorization/AuthorizeService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Courses = () => {
   const { route } = useParams();
@@ -28,6 +30,16 @@ const Courses = () => {
     setNuevoCurso({ ...nuevoCurso, [event.target.name]: value });
     console.log(nuevoCurso);
   };
+  const DeleteCourseInRoute = (ruta, course) => {
+    const deleteCourse = async () => {
+      await FetchData(
+        `api/Learningroutes/delete-course/${ruta}/${course}`,
+        "DELETE"
+      );
+    };
+    deleteCourse();
+    setReload(!reload);
+  };
 
   const crearCourse = async (event) => {
     event.preventDefault();
@@ -37,6 +49,9 @@ const Courses = () => {
     console.log(dataform);
     await FetchData("api/Courses", "POST", dataform);
     setNuevoCurso({
+      courseName: "",
+      courseDescripcion: "",
+      courseLength: "",
       routeId: route,
     });
     setReload(!reload);
@@ -45,19 +60,27 @@ const Courses = () => {
   return (
     <div>
       <h1>Nombre :{ruta.lrName}</h1> <br></br>
-      <h1>Descripción: {ruta.lrDiscipline}</h1>
+      <h2>Descripción: {ruta.lrDiscipline}</h2>
       <div>
-        <h2>Cursos en la ruta </h2>
+        <h3>Cursos en la ruta </h3>
         <ul>
           {ruta.courses?.length == 0 ? (
             <div> Esta ruta no tiene cursos, Crealos! </div>
           ) : (
             ruta.courses?.map((course) => (
-              <li key={course.courseId}>
-                <h2> {course.courseName}</h2>
-                <p>{course.courseDescripcion}</p>
-                <p>{course.courseName}</p>
-              </li>
+              <ListGroup key={course.courseId}>
+                <ListGroupItem>
+                  <h2> {course.courseName}</h2>
+                  <p>{course.courseDescripcion}</p>
+                  <p>{course.courseName}</p>
+                  <Button
+                    color="danger"
+                    onClick={() => DeleteCourseInRoute(route, course.courseId)}
+                  >
+                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                  </Button>
+                </ListGroupItem>
+              </ListGroup>
             ))
           )}
         </ul>

@@ -28,7 +28,7 @@ namespace RutasDeAprendizaje.Controllers
     [HttpGet]
     public ActionResult<dynamic> GetTlearningroutes( int page = 1)
     {
-      int elementosMostrar = 2;
+      int elementosMostrar = 3;
       decimal totalElementos = _context.Tlearningroutes.Count();
       decimal totalPaginas = Math.Ceiling(totalElementos/ elementosMostrar);
       int previa = page - 1;
@@ -252,6 +252,45 @@ namespace RutasDeAprendizaje.Controllers
                       }).ToList();
 
       return Ok(misRutas);
+    }
+
+    // GET: api/Learningroutes/search/$search
+    [AllowAnonymous]
+    [HttpGet("search/{search}")]
+    public ActionResult<dynamic> GetTlearningroutes( string search = "")
+    {
+      int elementosMostrar = 6;
+
+      var searchLearningrute = _context.Tlearningroutes
+                          .Where(x => EF.Functions.Like(x.Routename, $"%{search}%"))
+                          .Take(elementosMostrar)
+                          .ToList();
+  
+      return Ok(searchLearningrute) ;
+    }
+
+
+    // DELETE: api/Learningroutes/delete-course/5/5
+    [HttpDelete("delete-course/{ruta}/{id}")]
+    public async Task<IActionResult> DeleteTlearningroute(int id, int ruta)
+    {
+      var tlearningroute = await _context.Tlearningroutes.FindAsync(ruta);
+      if (tlearningroute == null)
+      {
+        return NotFound();
+      }
+
+      var routeHasCourse = (from rhc in _context.Trcoursesinroutes
+                            join c in _context.Tcourses
+                            on rhc.Courseid equals c.Courseid
+                            where rhc.Routeid == ruta
+                            && rhc.Courseid == id 
+                            select rhc).FirstOrDefault();
+
+      _context.Trcoursesinroutes.Remove(routeHasCourse);
+      await _context.SaveChangesAsync();
+
+      return NoContent();
     }
     public dynamic SerializerLearningRoute(int id)
     {
